@@ -8,7 +8,7 @@ SOURCES = \
 	Sub.sv \
 	SubSim.sv \
 
-SOURCE_ROOT = $(CPU_EXERCISE_ROOT)/tutorial/adder/
+SOURCE_ROOT = $(CPU_EXERCISE_ROOT)/tutorial/subtractor/
 DEPS_RTL = \
 	$(SOURCES:%=$(SOURCE_ROOT)%)
 

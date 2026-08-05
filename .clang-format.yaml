@@ -1,0 +1,12 @@
+---
+BasedOnStyle: Google
+
+# Use 4 spaces instead of tabs for indentation.
+#UseTab: Never # Same as Google
+IndentWidth: 4 # Google: 2
+
+# Don't break lines at a certain column limit.
+ColumnLimit: 0
+
+# Sort includes, import and using declarations.
+IncludeBlocks: Regroup

@@ -15,9 +15,7 @@ module Adder( 			// モジュールの宣言
 		DataPath srcB	// 入力線の宣言
 );      
 
-
 	// 加算
-   assign dst = srcA + srcB;  
+    assign dst = srcA + srcB;  
 
 endmodule				// モジュールの終了
-
