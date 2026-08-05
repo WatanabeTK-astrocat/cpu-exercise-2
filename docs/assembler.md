@@ -23,14 +23,12 @@
 
 この方法は，ミスが入りにくいと言う点で，手で計算するよりはかなりましです．
 
-
-
 ## アセンブラを作る
 
 一番まともで，できあがってしまえば楽ですが，アセンブラを作るまでがちょっと大変です．
 以下にひな形になるような C言語のコードを示します．チャレンジしてみる人は，このひながたを参考にするなどしてみてください．
 
-```
+```C
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -185,7 +183,6 @@ int main( int argc, char* argv[] )
     char op[ MAX_STRING_SIZE ];     
     char label[ MAX_STRING_SIZE ];
     
-    
     // ファイルをオープン
     file = fopen( argv[1], "r" );
     if( !file ){
@@ -193,9 +190,7 @@ int main( int argc, char* argv[] )
         return 0;
     }
 
-
     while( GetToken( file ) != FALSE ){
-        
         
         if( strcmp( token, "add" ) == 0 ||
             strcmp( token, "sub" ) == 0
@@ -249,7 +244,6 @@ int main( int argc, char* argv[] )
             // 空行は飛ばす
         }
         else{
-            
             strcpy( label, token );
             
             // 定義にない場合は，ラベルの可能性がある
@@ -257,9 +251,7 @@ int main( int argc, char* argv[] )
             GetAndCheckToken( file, ":"  ); // :
             GetAndCheckToken( file, "\n" ); // 改行
         }
-        
-        
-    }   
-    
+
+    }
 }
 ```

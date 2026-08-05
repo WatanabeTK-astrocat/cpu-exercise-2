@@ -10,16 +10,15 @@ sort.c 中の sort 関数を編集すればよいです．
 ## コンパイルと実行方法
 
 * コンソール中で，実験ツールの中の `tutorial/sort` に移動
-    ```
+    ```bash
     cd tutorial/sort
     ```
 * エディタで sort.c を開いて編集
 * コンパイル
-    ```
+    ```bash
     make
     ```
 * 実行
-    ```
+    ```bash
     ./a.out
     ```
-
