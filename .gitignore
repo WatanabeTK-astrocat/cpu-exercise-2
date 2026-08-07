@@ -1,4 +1,3 @@
-
 transcript
 ModelSim/
 QuartusPrime/
@@ -10,3 +9,5 @@ vivado_project/
 wave.vcd
 *.jou
 *.log
+
+~*.pptx
