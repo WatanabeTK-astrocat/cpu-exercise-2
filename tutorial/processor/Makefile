@@ -6,18 +6,20 @@ TOPLEVEL_MODULE = MainSim
 SOURCES = \
 	BasicTypes.sv \
 	Types.sv \
+	RegFile.sv \
 	ALU.sv \
+	PC.sv \
 	Branch.sv \
-	ClockDivider.sv \
-	CPU.sv \
 	Decoder.sv \
+	Execute.sv \
+	WriteBack.sv \
+	CPU.sv \
+	ClockDivider.sv \
 	DMem.sv \
 	IMem.sv \
 	IOCtrl.sv \
 	Main.sv \
 	MainSim.sv \
-	PC.sv \
-	RegFile.sv \
 
 SOURCE_ROOT = $(CPU_EXERCISE_ROOT)/tutorial/processor/
 DEPS_RTL = \

@@ -62,7 +62,7 @@ module MainSim;
         $dumpfile("wave.vcd");
         $dumpvars;
 `endif
-        main.cpu.pc.pc = 0;
+        //main.cpu.pc.pc = 0;
         btnU = 1'b1;
         btnC = 1'b0;
         btnD = 1'b1;

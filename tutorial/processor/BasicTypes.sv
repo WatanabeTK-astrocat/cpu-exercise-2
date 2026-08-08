@@ -26,6 +26,7 @@ parameter INSN_RESET_VECTOR = 0;
 // PC のインクリメントバイト数
 parameter INSN_PC_INC = 4;
 
+// 命令メモリ
 parameter INSN_MEM_OFFSET = 2;
 parameter INSN_MEM_WIDTH  = (INSN_ADDR_WIDTH - INSN_MEM_OFFSET);
 parameter INSN_MEM_SIZE   = 512;

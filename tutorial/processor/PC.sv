@@ -11,14 +11,22 @@ module PC(
 
     output InsnAddrPath addrOut,    // アドレス出力
 
-    input InsnAddrPath addrIn,        // 外部書き込みをする時のアドレス
+    input InsnAddrPath addrIn,      // 外部書き込みをする時のアドレス
     input logic wrEnable            // 外部書き込み有効
 );
 
     InsnAddrPath pc;
 
     always_ff @(posedge clk or posedge rst) begin
-        
+        if (rst) begin
+            pc <= INSN_RESET_VECTOR;
+        end
+        else if (wrEnable) begin
+            pc <= addrIn;
+        end
+        else begin
+            pc <= pc + INSN_PC_INC;
+        end
     end
     
     // 出力
