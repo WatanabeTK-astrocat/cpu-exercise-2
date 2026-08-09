@@ -20,7 +20,7 @@ SOURCES = \
 	Main.sv \
 	MainSim.sv \
 
-SOURCE_ROOT = $(CPU_EXERCISE_ROOT)/tutorial/processor/
+SOURCE_ROOT = $(CPU_EXERCISE_ROOT)/project/processor/
 DEPS_RTL = \
 	$(SOURCES:%=$(SOURCE_ROOT)%)
 
