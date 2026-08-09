@@ -12,7 +12,7 @@ module CPU(
                                         // dataAddr で指定したアドレスに対して書き込む値を出力する．
     output logic        dataWrEnable,   // データ書き込み有効
 
-    input  InsnPath     inst,           // 命令メモリからの入力
+    input  InsnPath     insn,           // 命令メモリからの入力
     input  DataPath     dataIn          // 読み出しデータ入力
                                         // dataAddr で指定したアドレスから読んだ値が入力される．
 );
@@ -24,7 +24,7 @@ module CPU(
     InsnAddrPath pcOut;         // アドレス出力
     
     // IMem
-    InsnPath imemInstCode;      // 命令コード
+    InsnPath imemInsnCode;      // 命令コード
     
     // Decoder
     OpInfo dcOpinfo;
@@ -33,8 +33,6 @@ module CPU(
     DataPath    rfRdDataA;  // 読み出しデータ rs
     DataPath    rfRdDataB;  // 読み出しデータ rt
     DataPath    rfWrData;   // 書き込みデータ
-    RegNumPath  rfWrNum;    // 書き込み番号
-    logic       rfWrEnable; // 書き込み制御 1の場合，書き込みを行う
     
     // ALU
     DataPath aluInA;           // ALU 入力A
@@ -42,7 +40,7 @@ module CPU(
     DataPath aluOut;           // ALU 出力
     
     // Branch
-    //logic brTaken;
+    logic brTaken;
 
     // ======== モジュールのインスタンス化 ========
     // PC
@@ -55,38 +53,48 @@ module CPU(
     );
 
     // Decoder
-    /* Decoder decoder(
+    Decoder decoder(
         .opInfo (dcOpinfo),
-        .insnCode (imemInsnCode)
-    ); */
+        .insn (imemInsnCode)
+    );
     
     // RegisterFile
-    /* RegisterFile regFile(
+    RegisterFile regFile(
         .clk (clk),
         .rdDataA (rfRdDataA),
         .rdDataB (rfRdDataB),
-        .rdNumA (dcOpinfo.rs1),
-        .rdNumB (dcOpinfo.rs2),
+        .rdNumA (dcOpinfo.rs),
+        .rdNumB (dcOpinfo.rt),
         .wrData (rfWrData),
-        .wrNum (rfWrNum),
+        .wrNum (dcOpinfo.regWrNum),
         .wrEnable (dcOpinfo.regWrEnable)
-    ); */
+    );
     
     // ALU
-    /* ALU alu(
+    ALU alu(
         .aluOut (aluOut),
         .aluInA (aluInA),
         .aluInB (aluInB),
         .shamt (dcOpinfo.shamt),
         .funct (dcOpinfo.funct)
-    ); */
+    );
+
+    // Branch Unit
+    BranchUnit branch(
+        .brTaken(brTaken),
+        .opcode(dcOpinfo.opcode),
+        .compInA(rfRdDataA),
+        .compInB(rfRdDataB)
+    );
 
     always_comb begin
+        // ======== Instruction Fetch ========
         // IMem
-        imemInstCode = inst;
+        imemInsnCode = insn;
         insnAddr     = pcOut;
 
-        /* if (dcOpinfo.isJump) begin
+        // PC update
+        if (dcOpinfo.isJump) begin
             pcWrEnable = TRUE;
         end
         else if (dcOpinfo.isBranch) begin
@@ -95,8 +103,39 @@ module CPU(
         else begin
             pcWrEnable = FALSE;
         end
-        pcIn = pcOut + EXPAND_BR_DISPLACEMENT(dcOpinfo.imm); */
-        pcIn = pcOut + INSN_PC_INC;
+        pcIn = pcOut + EXPAND_BR_DISPLACEMENT(dcOpinfo.imm);
+
+        // ======== Execute ========
+        // ALU input selection and reverse for SUB
+        aluInA = rfRdDataA;
+        if (dcOpinfo.isALUInImm) begin
+            aluInB[15:0] = dcOpinfo.imm;
+            aluInB[31:16] = 16'b0;
+        end
+        else begin
+            aluInB = rfRdDataB;
+        end
+        if (dcOpinfo.funct == SUB) begin
+            aluInB = -aluInB;
+        end
+
+        // ======== Memory ========
+        // DMem write
+        dataWrEnable = dcOpinfo.isStore;
+        dataAddr     = GET_ADDR(aluOut);
+        dataOut      = rfRdDataB;
+
+        // ======== Write Back ========
+        // Register write data
+        if (dcOpinfo.isJump) begin
+            rfWrData = {21'b0, pcOut} + INSN_PC_INC;
+        end
+        else if (dcOpinfo.isLoad) begin
+            rfWrData = dataIn;
+        end
+        else begin
+            rfWrData = aluOut;
+        end
     end
 
 endmodule

@@ -11,15 +11,17 @@ module ALU(
     input DataPath aluInA,
     input DataPath aluInB,
     input ShamtPath shamt,
-    input funct_e funct
+    input FunctEnum funct
 );
 
     always_comb begin
         
+        aluOut = '0;
+
         unique case (funct)
         // 算術演算
         ADD,
-        SUB: // 符号の変更はALUの外、Executeステージで行う
+        SUB: // 符号反転は CPU 側で行う
             aluOut = aluInA + aluInB;
         // 論理演算
         AND:

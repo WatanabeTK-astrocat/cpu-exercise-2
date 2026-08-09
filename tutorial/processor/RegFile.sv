@@ -17,20 +17,19 @@ module RegisterFile(
 	input RegNumPath rdNumB,	// 読み出しレジスタ番号B
 
 	input DataPath   wrData,	// 書き込みデータ
-	input RegNumPath wrNum,	// 書き込みレジスタ番号
-	input logic       wrEnable	// 書き込み制御 1の場合，書き込みを行う
+	input RegNumPath wrNum,	    // 書き込みレジスタ番号
+	input logic      wrEnable	// 書き込み制御 1の場合，書き込みを行う
 );
 
 	// 実際に値が入るストレージ
 	// DataPath の配列（サイズ：REG_FILE_SIZE）
 	DataPath storage[ REG_FILE_SIZE ]; 
 
-
 	// 書き込みと，レジスタ・ファイルの実現
 	// クロックの立ち上がりによって書き込みが行われる と言う動作を書くことで，
 	// コンパイラはこれを順序回路だと解釈する．
 	always_ff @( posedge clk ) begin
-		if( wrEnable ) begin			// 書き込み制御
+		if( wrEnable & (wrNum != REG_ZERO) ) begin			// 書き込み制御
 			storage[ wrNum ] <= wrData;	// 順序回路では，ノンブロッキング代入で
 		end
 	end
