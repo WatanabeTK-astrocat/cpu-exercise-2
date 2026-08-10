@@ -1,3 +1,8 @@
+# Ignore files and directories that are not needed in the repository
+.DS_Store
+.vscode/
+
+# Quartus and Vivado generated files
 transcript
 ModelSim/
 QuartusPrime/
@@ -10,4 +15,60 @@ wave.vcd
 *.jou
 *.log
 
+# Powerpoint and Word temporary files
 ~*.pptx
+~*.docx
+
+# https://github.com/github/gitignore/blob/main/C%2B%2B.gitignore
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Linker files
+*.ilk
+
+# Debugger Files
+*.pdb
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+*.so.*
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# CMake generated files
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+install_manifest.txt 
+compile_commands.json
+
+# Temporary and backup files
+*.dtmp
+*.tmp
+*.bkp
+*.log
+
+# build artifacts
+bin/
+build*/
+Build*/
+doxygen_document/

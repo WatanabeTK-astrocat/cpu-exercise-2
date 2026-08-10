@@ -1,2 +1,2 @@
 all:
-	gcc -Wall sort.c
+	gcc -Wall -O3 sort.c
