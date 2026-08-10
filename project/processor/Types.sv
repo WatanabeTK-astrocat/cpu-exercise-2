@@ -115,18 +115,18 @@ typedef struct packed {
     OpcodeEnum opcode;
     RegNumPath rs;
     RegNumPath rt;
-    RegNumPath rd;
     ShamtPath shamt;
     FunctEnum funct;
     ImmediatePath imm;
     JumpAddressPath jmpAddr;
     logic isALUInImm;   // ALUの第2オペランドが即値かどうか
-    RegNumPath regWrNum;     // 書き込み先レジスタ番号
-    logic regWrEnable;  // レジスタ書き込み有効かどうか
+    RegNumPath rfWrNum; // 書き込み先レジスタ番号
+    logic rfWrEnable;   // レジスタ書き込み有効かどうか
     logic isLoad;       // メモリからのロード命令かどうか
     logic isStore;      // メモリへのストア命令かどうか
     logic isBranch;     // 分岐命令かどうか
-    logic isJump;       // ジャンプ命令かどうか
+    logic isJumpA;      // アドレスによるジャンプ命令かどうか
+    logic isJumpR;      // レジスタによるジャンプ命令かどうか
 } OpInfo;
 
 // ======== 特殊レジスタ ========
@@ -134,9 +134,21 @@ parameter REG_ZERO = 5'b00000; // 常に0を返すレジスタ
 parameter REG_RA   = 5'b11111; // リターンアドレスを格納するレジスタ
 
 // ======== 便利関数 ========
-// constant を InsnAddrPath の幅にまで符号拡張する
+// immediate を InsnAddrPath の幅にまで符号拡張する
 // InsnAddrPath が小さいので，上を取り出す
-function automatic InsnAddrPath EXPAND_BR_DISPLACEMENT(
+function automatic InsnAddrPath EXPAND_JMPADDR_2_INSNADDRPATH(
+    input JumpAddressPath jmpaddr
+);
+    return { jmpaddr[ INSN_ADDR_WIDTH-1 : 0 ] };
+endfunction
+
+function automatic InsnAddrPath EXPAND_DATAPATH_2_INSNADDRPATH(
+    input DataPath data
+);
+    return { data[ INSN_ADDR_WIDTH-1 : 0 ] };
+endfunction
+
+function automatic InsnAddrPath EXPAND_DISPLACEMENT_2_INSNADDRPATH(
     input ImmediatePath disp
 );
     return { disp[ INSN_ADDR_WIDTH-1 : 0 ] };

@@ -10,6 +10,8 @@ module Decoder(
     input InsnPath insn
 );
 
+    RegNumPath rd; // 書き込み先レジスタ番号。opinfoには含まれず、ここで一時的に保持する
+
     always_comb begin
 
         opInfo = '0;
@@ -17,7 +19,7 @@ module Decoder(
         opInfo.opcode   = OpcodeEnum'(  insn[OPCODE_POS       : OPCODE_POS       + 1 - OPCODE_WIDTH]    );
         opInfo.rs       =               insn[REG_RS_POS       : REG_RS_POS       + 1 - REG_NUM_WIDTH];
         opInfo.rt       =               insn[REG_RT_POS       : REG_RT_POS       + 1 - REG_NUM_WIDTH];
-        opInfo.rd       =               insn[REG_RD_POS       : REG_RD_POS       + 1 - REG_NUM_WIDTH];
+               rd       =               insn[REG_RD_POS       : REG_RD_POS       + 1 - REG_NUM_WIDTH];
         opInfo.shamt    =               insn[SHAMT_POS        : SHAMT_POS        + 1 - SHAMT_WIDTH];
         opInfo.funct    = FunctEnum'(   insn[FUNCT_POS        : FUNCT_POS        + 1 - FUNCT_WIDTH]     );
         opInfo.imm      =               insn[IMMEDIATE_POS    : IMMEDIATE_POS    + 1 - IMMEDIATE_WIDTH];
@@ -26,54 +28,48 @@ module Decoder(
         // Switch by opcode
         unique case (opInfo.opcode)
         R_TYPE: begin
-            opInfo.regWrNum     = opInfo.rd;
-            opInfo.regWrEnable  = TRUE;
+            opInfo.rfWrNum      = rd;
+            opInfo.rfWrEnable   = TRUE;
         end
         ADDI: begin
             opInfo.isALUInImm   = TRUE;
-            opInfo.regWrNum     = opInfo.rt;
-            opInfo.regWrEnable  = TRUE;
-            opInfo.rd           = '0;
+            opInfo.rfWrNum      = opInfo.rt;
+            opInfo.rfWrEnable   = TRUE;
             
             opInfo.funct        = ADD;
         end
         SUBI: begin
             opInfo.isALUInImm   = TRUE;
-            opInfo.regWrNum     = opInfo.rt;
-            opInfo.regWrEnable  = TRUE;
-            opInfo.rd           = '0;
+            opInfo.rfWrNum      = opInfo.rt;
+            opInfo.rfWrEnable   = TRUE;
             
             opInfo.funct        = SUB;
         end
         ANDI: begin
             opInfo.isALUInImm   = TRUE;
-            opInfo.regWrNum     = opInfo.rt;
-            opInfo.regWrEnable  = TRUE;
-            opInfo.rd           = '0;
+            opInfo.rfWrNum      = opInfo.rt;
+            opInfo.rfWrEnable   = TRUE;
             
             opInfo.funct        = AND;
         end
         ORI: begin
             opInfo.isALUInImm   = TRUE;
-            opInfo.regWrNum     = opInfo.rt;
-            opInfo.regWrEnable  = TRUE;
-            opInfo.rd           = '0;
+            opInfo.rfWrNum      = opInfo.rt;
+            opInfo.rfWrEnable   = TRUE;
             
             opInfo.funct        = OR;
         end
         XORI: begin
             opInfo.isALUInImm   = TRUE;
-            opInfo.regWrNum     = opInfo.rt;
-            opInfo.regWrEnable  = TRUE;
-            opInfo.rd           = '0;
+            opInfo.rfWrNum      = opInfo.rt;
+            opInfo.rfWrEnable   = TRUE;
             
             opInfo.funct        = XOR;
         end
         SLTI: begin
             opInfo.isALUInImm   = TRUE;
-            opInfo.regWrNum     = opInfo.rt;
-            opInfo.regWrEnable  = TRUE;
-            opInfo.rd           = '0;
+            opInfo.rfWrNum      = opInfo.rt;
+            opInfo.rfWrEnable   = TRUE;
             
             opInfo.funct        = SLT;
         end
@@ -82,7 +78,6 @@ module Decoder(
         LB: begin
             opInfo.isLoad       = TRUE;
             opInfo.isALUInImm   = TRUE;
-            opInfo.rd           = '0;
 
             opInfo.funct        = ADD;
         end
@@ -91,7 +86,6 @@ module Decoder(
         SB: begin
             opInfo.isStore      = TRUE;
             opInfo.isALUInImm   = TRUE;
-            opInfo.rd           = '0;
 
             opInfo.funct        = ADD;
         end
@@ -102,38 +96,33 @@ module Decoder(
         BLTU,
         BGEU: begin
             opInfo.isBranch     = TRUE;
-            opInfo.rd           = '0;
         end
         J: begin
-            opInfo.isJump       = TRUE;
+            opInfo.isJumpA      = TRUE;
             opInfo.rs           = '0;
             opInfo.rt           = '0;
-            opInfo.rd           = '0;
         end
         JAL: begin
-            opInfo.isJump       = TRUE;
-            opInfo.regWrNum     = REG_RA;
-            opInfo.regWrEnable  = TRUE;
+            opInfo.isJumpA      = TRUE;
+            opInfo.rfWrNum      = REG_RA;
+            opInfo.rfWrEnable   = TRUE;
             opInfo.rs           = '0;
             opInfo.rt           = '0;
-            opInfo.rd           = '0;
         end
         JR: begin
-            opInfo.isJump       = TRUE;
+            opInfo.isJumpR      = TRUE;
             // rs is necessary since it is the jump target
             opInfo.rt           = '0;
-            opInfo.rd           = '0;
         end
         JALR: begin
-            opInfo.isJump       = TRUE;
-            opInfo.regWrNum     = REG_RA;
-            opInfo.regWrEnable  = TRUE;
+            opInfo.isJumpR      = TRUE;
+            opInfo.rfWrNum      = REG_RA;
+            opInfo.rfWrEnable   = TRUE;
             // rs is necessary since it is the jump target
             opInfo.rt           = '0;
-            opInfo.rd           = '0;
         end
         default: begin
-            opInfo.rd = '0;
+            rd = '0;
             opInfo.rs = '0;
             opInfo.rt = '0;
         end

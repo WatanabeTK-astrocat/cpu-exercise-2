@@ -66,8 +66,8 @@ module CPU(
         .rdNumA (dcOpinfo.rs),
         .rdNumB (dcOpinfo.rt),
         .wrData (rfWrData),
-        .wrNum (dcOpinfo.regWrNum),
-        .wrEnable (dcOpinfo.regWrEnable)
+        .wrNum (dcOpinfo.rfWrNum),
+        .wrEnable (dcOpinfo.rfWrEnable)
     );
     
     // ALU
@@ -94,16 +94,22 @@ module CPU(
         insnAddr     = pcOut;
 
         // PC update
-        if (dcOpinfo.isJump) begin
+        if (dcOpinfo.isJumpA) begin
             pcWrEnable = TRUE;
+            pcIn = EXPAND_JMPADDR_2_INSNADDRPATH(dcOpinfo.jmpAddr);
+        end
+        else if (dcOpinfo.isJumpR) begin
+            pcWrEnable = TRUE;
+            pcIn = pcOut + EXPAND_DATAPATH_2_INSNADDRPATH(rfRdDataA);
         end
         else if (dcOpinfo.isBranch) begin
             pcWrEnable = brTaken;
+            pcIn = pcOut + EXPAND_DISPLACEMENT_2_INSNADDRPATH(dcOpinfo.imm);
         end
         else begin
             pcWrEnable = FALSE;
+            pcIn = 11'b0;
         end
-        pcIn = pcOut + EXPAND_BR_DISPLACEMENT(dcOpinfo.imm);
 
         // ======== Execute ========
         // ALU input selection and reverse for SUB
@@ -127,7 +133,7 @@ module CPU(
 
         // ======== Write Back ========
         // Register write data
-        if (dcOpinfo.isJump) begin
+        if (dcOpinfo.isJumpA | dcOpinfo.isJumpR) begin
             rfWrData = {21'b0, pcOut} + INSN_PC_INC;
         end
         else if (dcOpinfo.isLoad) begin
