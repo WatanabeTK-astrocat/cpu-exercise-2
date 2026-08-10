@@ -1,3 +1,3 @@
 #include <string>
 
-std::string assemble(const std::string& instruction);
+[[nodiscard]] std::string assemble(const std::string& instruction);

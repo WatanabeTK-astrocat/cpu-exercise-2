@@ -5,8 +5,9 @@ message(STATUS "CMakeLists for source")
 
 add_executable(
     assembler.out
-    main.cpp
     stringop.cpp
+    assembler.cpp
+    main.cpp
 )
 
 configure_own_target(assembler.out)

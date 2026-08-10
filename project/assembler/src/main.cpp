@@ -1,5 +1,6 @@
 #include <fstream>
 #include <iostream>
+#include <regex>
 #include <string>
 
 #include "assembler.hpp"
@@ -19,7 +20,14 @@ int main(int argc, char* argv[]) {
     std::string line;
     while (std::getline(inputFile, line)) {
         // Process each line of the input file
-        std::cout << line << std::endl;  // For demonstration, just print the line
+        // std::cout << line << std::endl;  // For demonstration, just print the line
+        const std::string cleanedLine = std::regex_replace(line, std::regex(",|\\s+"), " ");             // Replace commas and multiple spaces with a single space
+        const std::string trimmedLine = std::regex_replace(cleanedLine, std::regex("^\\s+|\\s+$"), "");  // Trim leading and trailing spaces
+        if (trimmedLine.empty()) {
+            continue;  // Skip empty lines
+        }
+        const std::string binaryInstruction = assemble(trimmedLine);
+        std::cout << binaryInstruction << std::endl;
     }
 
     inputFile.close();
