@@ -18,8 +18,12 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
+    std::stringstream buffer;
+    buffer << inputFile.rdbuf();  // Read the entire file into the stringstream
+
     Assembler assembler;
-    assembler.assemble(inputFile);
+    std::string res = assembler.assemble(buffer);
+    std::cout << res << std::endl;  // Print the assembled instructions
     inputFile.close();
 
     return 0;

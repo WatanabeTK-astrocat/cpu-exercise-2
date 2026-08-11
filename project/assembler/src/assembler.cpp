@@ -2,9 +2,9 @@
 
 #include <bitset>
 #include <cassert>
-#include <fstream>
 #include <iostream>
 #include <map>
+#include <sstream>
 #include <string>
 #include <tuple>
 #include <vector>
@@ -12,6 +12,7 @@
 #include "stringop.hpp"
 
 int registerToInt(const std::string& reg) {
+    std::cout << "reg :" << reg << std::endl;
     if (reg == "zero") {
         return 0;  // Special case for the zero register
     } else if (reg == "t3") {
@@ -92,12 +93,6 @@ int registerToInt(const std::string& reg) {
     }
 
     return regNum;
-}
-
-std::string binaryStringToHexString(const std::string& binaryString) {
-    assert(binaryString.length() == 32);  // Ensure the binary string is 32 bits long
-    const unsigned long long int binaryValue = std::bitset<32>(binaryString).to_ullong();
-    return std::format("{:08x}", binaryValue);
 }
 
 class RType_Nonshift_Opcode final {
@@ -496,10 +491,11 @@ Assembler::assemble_line_second_pass(const std::string& instruction, const int a
     }
 }
 
-void rewind_to_beginning(std::ifstream& in) {
+void rewind_to_beginning(std::stringstream& in) {
     // EOF以外の読み取り失敗を、clear()で隠す前に検出する
     if (in.bad() || (in.fail() && !in.eof())) {
-        throw std::runtime_error("source read error");
+        std::cerr << "failed to read source" << std::endl;
+        std::abort();  // Terminate the program with an error
     }
 
     // getline()でEOFまで読んだ後は、通常eofbitとfailbitが立っている
@@ -507,11 +503,12 @@ void rewind_to_beginning(std::ifstream& in) {
     in.seekg(0, std::ios::beg);
 
     if (!in) {
-        throw std::runtime_error("failed to rewind source");
+        std::cerr << "failed to rewind source" << std::endl;
+        std::abort();  // Terminate the program with an error
     }
 }
 
-void Assembler::assemble(std::ifstream& inputFile) {
+std::string Assembler::assemble(std::stringstream& inputFile) {
     std::string line;
     int addressnow = 0;  // Initialize the current address to 0
     while (std::getline(inputFile, line)) {
@@ -549,5 +546,5 @@ void Assembler::assemble(std::ifstream& inputFile) {
         }
     }
 
-    std::cout << result << std::endl;  // Print the assembled instructions
+    return result;
 }

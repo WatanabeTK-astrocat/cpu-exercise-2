@@ -21,20 +21,25 @@ endif()
 FetchContent_MakeAvailable(googletest)
 
 # ========== 単体テストの定義 ==========
-#add_executable(Test)
+add_executable(
+    Test
+    assembler_test.cpp
+    stringop_test.cpp
+)
 
 # ========== ライブラリのリンク ==========
-#target_link_libraries(Test PRIVATE
-#   StaticAssembler
-#    gtest_main
-#)
+target_link_libraries(Test PRIVATE
+    StaticStringOp
+    StaticAssembler
+    gtest_main
+)
 
 #configure_own_target(Test)
 
 # ========== 単体テストの登録 ==========
 include(GoogleTest)
-#gtest_discover_tests(
-#    Test
-#    PROPERTIES
-#    TIMEOUT 10
-#)
+gtest_discover_tests(
+    Test
+    PROPERTIES
+    TIMEOUT 10
+)

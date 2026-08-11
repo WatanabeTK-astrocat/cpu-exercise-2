@@ -1,5 +1,5 @@
-#include <fstream>
 #include <map>
+#include <sstream>
 #include <string>
 #include <tuple>
 
@@ -25,5 +25,5 @@ class Assembler final {
     Assembler() = default;
     ~Assembler() = default;
 
-    void assemble(std::ifstream& inputFile);
+    std::string assemble(std::stringstream& inputFile);
 };
