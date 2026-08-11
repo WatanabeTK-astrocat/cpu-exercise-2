@@ -1,9 +1,16 @@
 #include "stringop.hpp"
 
 #include <algorithm>
-#include <iostream>
+#include <regex>
 #include <string>
 #include <vector>
+
+std::string preformattedString(const std::string& str) {
+    const std::string commentsRemoved = std::regex_replace(str, std::regex("#.*"), "");              // Remove comments starting with '#'
+    const std::string cleanedLine = std::regex_replace(commentsRemoved, std::regex("\\s+"), " ");    // Replace multiple spaces with a single space
+    const std::string trimmedLine = std::regex_replace(cleanedLine, std::regex("^\\s+|\\s+$"), "");  // Trim leading and trailing spaces
+    return trimmedLine;
+}
 
 std::vector<std::string> split(const std::string& str, const char delimiter) {
     std::vector<std::string> tokens;
@@ -22,21 +29,4 @@ std::vector<std::string> split(const std::string& str, const char delimiter) {
         tokens.push_back(token);
     }
     return tokens;
-}
-
-int registerToInt(const std::string& reg) {
-    if (reg.empty() || reg[0] != '$' || reg[0] != 'r') {
-        std::cerr << "Invalid register format: " << reg << std::endl;
-        std::abort();  // Terminate the program with an error
-    }
-
-    std::string regNumStr = reg.substr(1);  // Remove the '$' or 'r' prefix
-    int regNum = std::stoi(regNumStr);      // Convert to integer
-
-    if (regNum < 0 || regNum > 31) {
-        std::cerr << "Register number out of range: " << regNum << std::endl;
-        std::abort();  // Terminate the program with an error
-    }
-
-    return regNum;
 }

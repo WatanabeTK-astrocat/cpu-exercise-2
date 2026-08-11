@@ -35,11 +35,11 @@ module ALU(
         SLT:
             aluOut[0] = aluInA < aluInB ? TRUE: FALSE;
         // シフト演算
-        SLL:
+        SLLI:
             aluOut = aluInA << shamt;
-        SRL:
+        SRLI:
             aluOut = aluInA >> shamt;
-        SRA:
+        SRAI:
             aluOut = aluInA >>> shamt;
         default:
             aluOut = '0;

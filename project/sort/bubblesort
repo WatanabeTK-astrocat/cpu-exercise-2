@@ -1,0 +1,203 @@
+	.file	"bubblesort.c"
+	.option nopic
+	.attribute arch, "rv32i2p1"
+	.attribute unaligned_access, 0
+	.attribute stack_align, 16
+# GNU C23 (GCC) version 16.2.0 (riscv64-elf)
+#	compiled by GNU C version Apple LLVM 16.0.0 (clang-1600.0.26.6), GMP version 6.3.0, MPFR version 4.2.2, MPC version 1.4.1, isl version none
+# GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+# options passed: -mabi=ilp32 -misa-spec=20191213 -march=rv32i -O0 -ffreestanding
+	.text
+	.globl	array
+	.bss
+	.align	2
+	.type	array, @object
+	.size	array, 8192
+array:
+	.zero	8192
+	.text
+	.align	2
+	.globl	sort
+	.type	sort, @function
+sort:
+	addi	sp,sp,-48	#,,
+	sw	ra,44(sp)	#,
+	sw	s0,40(sp)	#,
+	addi	s0,sp,48	#,,
+	mv	a5,a0	# tmp160, size
+	sh	a5,-34(s0)	# tmp161, size
+# bubblesort.c:12:     for (i = 0; i < size - 1; i++) {
+	sh	zero,-18(s0)	#, i
+# bubblesort.c:12:     for (i = 0; i < size - 1; i++) {
+	j	.L2		#
+.L6:
+# bubblesort.c:13:         for (j = 0; j < size - i - 1; j++) {
+	sh	zero,-20(s0)	#, j
+# bubblesort.c:13:         for (j = 0; j < size - i - 1; j++) {
+	j	.L3		#
+.L5:
+# bubblesort.c:14:             if (array[j] > array[j + 1]) {
+	lh	a5,-20(s0)		# _1, j
+	lui	a4,%hi(array)	# tmp162,
+	addi	a4,a4,%lo(array)	# tmp163, tmp162,
+	slli	a5,a5,1	#, tmp164, _1
+	add	a5,a4,a5	# tmp164, tmp165, tmp163
+	lh	a4,0(a5)		# _2, array[_1]
+# bubblesort.c:14:             if (array[j] > array[j + 1]) {
+	lh	a5,-20(s0)		# _3, j
+	addi	a5,a5,1	#, _4, _3
+# bubblesort.c:14:             if (array[j] > array[j + 1]) {
+	lui	a3,%hi(array)	# tmp166,
+	addi	a3,a3,%lo(array)	# tmp167, tmp166,
+	slli	a5,a5,1	#, tmp168, _4
+	add	a5,a3,a5	# tmp168, tmp169, tmp167
+	lh	a5,0(a5)		# _5, array[_4]
+# bubblesort.c:14:             if (array[j] > array[j + 1]) {
+	ble	a4,a5,.L4	#, _2, _5,
+# bubblesort.c:15:                 short temp = array[j];
+	lh	a5,-20(s0)		# _6, j
+# bubblesort.c:15:                 short temp = array[j];
+	lui	a4,%hi(array)	# tmp170,
+	addi	a4,a4,%lo(array)	# tmp171, tmp170,
+	slli	a5,a5,1	#, tmp172, _6
+	add	a5,a4,a5	# tmp172, tmp173, tmp171
+	lhu	a5,0(a5)	# tmp174, array[_6]
+	sh	a5,-22(s0)	# tmp174, temp
+# bubblesort.c:16:                 array[j] = array[j + 1];
+	lh	a5,-20(s0)		# _7, j
+	addi	a4,a5,1	#, _8, _7
+# bubblesort.c:16:                 array[j] = array[j + 1];
+	lh	a5,-20(s0)		# _9, j
+# bubblesort.c:16:                 array[j] = array[j + 1];
+	lui	a3,%hi(array)	# tmp175,
+	addi	a3,a3,%lo(array)	# tmp176, tmp175,
+	slli	a4,a4,1	#, tmp177, _8
+	add	a4,a3,a4	# tmp177, tmp178, tmp176
+	lh	a4,0(a4)		# _10, array[_8]
+# bubblesort.c:16:                 array[j] = array[j + 1];
+	lui	a3,%hi(array)	# tmp179,
+	addi	a3,a3,%lo(array)	# tmp180, tmp179,
+	slli	a5,a5,1	#, tmp181, _9
+	add	a5,a3,a5	# tmp181, tmp182, tmp180
+	sh	a4,0(a5)	# _10, array[_9]
+# bubblesort.c:17:                 array[j + 1] = temp;
+	lh	a5,-20(s0)		# _11, j
+	addi	a5,a5,1	#, _12, _11
+# bubblesort.c:17:                 array[j + 1] = temp;
+	lui	a4,%hi(array)	# tmp183,
+	addi	a4,a4,%lo(array)	# tmp184, tmp183,
+	slli	a5,a5,1	#, tmp185, _12
+	add	a5,a4,a5	# tmp185, tmp186, tmp184
+	lhu	a4,-22(s0)	# tmp187, temp
+	sh	a4,0(a5)	# tmp187, array[_12]
+.L4:
+# bubblesort.c:13:         for (j = 0; j < size - i - 1; j++) {
+	lh	a5,-20(s0)		# j.0_13, j
+	slli	a5,a5,16	#, j.1_14, j.0_13
+	srli	a5,a5,16	#, j.1_14, j.1_14
+	addi	a5,a5,1	#, tmp188, j.1_14
+	slli	a5,a5,16	#, _15, tmp188
+	srli	a5,a5,16	#, _15, _15
+	sh	a5,-20(s0)	# _15, j
+.L3:
+# bubblesort.c:13:         for (j = 0; j < size - i - 1; j++) {
+	lh	a4,-20(s0)		# _16, j
+# bubblesort.c:13:         for (j = 0; j < size - i - 1; j++) {
+	lh	a3,-34(s0)		# _17, size
+	lh	a5,-18(s0)		# _18, i
+	sub	a5,a3,a5	# _19, _17, _18
+# bubblesort.c:13:         for (j = 0; j < size - i - 1; j++) {
+	addi	a5,a5,-1	#, _20, _19
+# bubblesort.c:13:         for (j = 0; j < size - i - 1; j++) {
+	blt	a4,a5,.L5	#, _16, _20,
+# bubblesort.c:12:     for (i = 0; i < size - 1; i++) {
+	lh	a5,-18(s0)		# i.2_21, i
+	slli	a5,a5,16	#, i.3_22, i.2_21
+	srli	a5,a5,16	#, i.3_22, i.3_22
+	addi	a5,a5,1	#, tmp189, i.3_22
+	slli	a5,a5,16	#, _23, tmp189
+	srli	a5,a5,16	#, _23, _23
+	sh	a5,-18(s0)	# _23, i
+.L2:
+# bubblesort.c:12:     for (i = 0; i < size - 1; i++) {
+	lh	a4,-18(s0)		# _24, i
+# bubblesort.c:12:     for (i = 0; i < size - 1; i++) {
+	lh	a5,-34(s0)		# _25, size
+	addi	a5,a5,-1	#, _26, _25
+# bubblesort.c:12:     for (i = 0; i < size - 1; i++) {
+	blt	a4,a5,.L6	#, _24, _26,
+# bubblesort.c:21: }
+	nop	
+	nop	
+	lw	ra,44(sp)		#,
+	lw	s0,40(sp)		#,
+	addi	sp,sp,48	#,,
+	jr	ra		#
+	.size	sort, .-sort
+	.align	2
+	.globl	main
+	.type	main, @function
+main:
+	addi	sp,sp,-48	#,,
+	sw	ra,44(sp)	#,
+	sw	s0,40(sp)	#,
+	addi	s0,sp,48	#,,
+	sw	a0,-36(s0)	# argc, argc
+	sw	a1,-40(s0)	# argv, argv
+# bubblesort.c:24:     short size = 8;
+	li	a5,8		# tmp136,
+	sh	a5,-18(s0)	# tmp136, size
+# bubblesort.c:26:     array[0] = 5;
+	lui	a5,%hi(array)	# tmp137,
+	addi	a5,a5,%lo(array)	# tmp138, tmp137,
+	li	a4,5		# tmp139,
+	sh	a4,0(a5)	# tmp139, array[0]
+# bubblesort.c:27:     array[1] = 9;
+	lui	a5,%hi(array)	# tmp140,
+	addi	a5,a5,%lo(array)	# tmp141, tmp140,
+	li	a4,9		# tmp142,
+	sh	a4,2(a5)	# tmp142, array[1]
+# bubblesort.c:28:     array[2] = 1;
+	lui	a5,%hi(array)	# tmp143,
+	addi	a5,a5,%lo(array)	# tmp144, tmp143,
+	li	a4,1		# tmp145,
+	sh	a4,4(a5)	# tmp145, array[2]
+# bubblesort.c:29:     array[3] = 4;
+	lui	a5,%hi(array)	# tmp146,
+	addi	a5,a5,%lo(array)	# tmp147, tmp146,
+	li	a4,4		# tmp148,
+	sh	a4,6(a5)	# tmp148, array[3]
+# bubblesort.c:30:     array[4] = 3;
+	lui	a5,%hi(array)	# tmp149,
+	addi	a5,a5,%lo(array)	# tmp150, tmp149,
+	li	a4,3		# tmp151,
+	sh	a4,8(a5)	# tmp151, array[4]
+# bubblesort.c:31:     array[5] = 2;
+	lui	a5,%hi(array)	# tmp152,
+	addi	a5,a5,%lo(array)	# tmp153, tmp152,
+	li	a4,2		# tmp154,
+	sh	a4,10(a5)	# tmp154, array[5]
+# bubblesort.c:32:     array[6] = 0;
+	lui	a5,%hi(array)	# tmp155,
+	addi	a5,a5,%lo(array)	# tmp156, tmp155,
+	sh	zero,12(a5)	#, array[6]
+# bubblesort.c:33:     array[7] = 8;
+	lui	a5,%hi(array)	# tmp157,
+	addi	a5,a5,%lo(array)	# tmp158, tmp157,
+	li	a4,8		# tmp159,
+	sh	a4,14(a5)	# tmp159, array[7]
+# bubblesort.c:35:     sort(size);
+	lh	a5,-18(s0)		# tmp160, size
+	mv	a0,a5	#, tmp160
+	call	sort		#
+# bubblesort.c:37:     return 0;
+	li	a5,0		# _12,
+# bubblesort.c:38: }
+	mv	a0,a5	#, <retval>
+	lw	ra,44(sp)		#,
+	lw	s0,40(sp)		#,
+	addi	sp,sp,48	#,,
+	jr	ra		#
+	.size	main, .-main
+	.ident	"GCC: (GNU) 16.2.0"
+	.section	.note.GNU-stack,"",@progbits

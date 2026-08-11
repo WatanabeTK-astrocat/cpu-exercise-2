@@ -1,6 +1,6 @@
 #include <string>
 #include <vector>
 
-std::vector<std::string> split(const std::string& str, const char delimiter = ' ');
+std::string preformattedString(const std::string& str);
 
-int registerToInt(const std::string& reg);
+std::vector<std::string> split(const std::string& str, const char delimiter = ' ');

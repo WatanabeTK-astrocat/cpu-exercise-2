@@ -105,9 +105,9 @@ typedef enum FunctPath {
     NOR  = 'b100111,
     SLT  = 'b101010,
     // シフト操作
-    SLL  = 'b000000,
-    SRL  = 'b000010,
-    SRA  = 'b000011
+    SLLI = 'b000000,
+    SRLI = 'b000010,
+    SRAI = 'b000011
 } FunctEnum;
 
 // ======== デコードされた命令情報の構造体 ========

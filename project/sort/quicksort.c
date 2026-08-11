@@ -1,6 +1,4 @@
-#include <stdio.h>
-
-short array[4096];
+volatile short array[4096];
 
 /**
  * @brief Swap two elements in the array
@@ -8,7 +6,7 @@ short array[4096];
  * @param i
  * @param j
  */
-void swap(int i, int j) {
+void swap(short i, short j) {
     short temp = array[i];
     array[i] = array[j];
     array[j] = temp;
@@ -42,14 +40,17 @@ short median3(short a, short b, short c) {
     }
 }
 
-void partition(int left, int right) {
+void partition(short left, short right) {
     if (left >= right) {
         return;
     }
 
-    short pivot = median3(array[left], array[((right + left) >> 1)], array[right]);
-    int low = left;
-    int high = right;
+    short pivot_l = array[left];
+    short pivot_r = array[right];
+    short pivot_m = array[((right + left) >> 1)];
+    short pivot = median3(pivot_l, pivot_m, pivot_r);
+    short low = left;
+    short high = right;
     while (1) {
         while (low < right && array[low] < pivot) {
             low++;
@@ -82,13 +83,12 @@ void partition(int left, int right) {
  *
  * @param size
  */
-void sort(int size) {
+void sort(short size) {
     partition(0, size - 1);
 }
 
 int main(int argc, char* argv[]) {
-    int i;
-    int size = 8;
+    short size = 8;
 
     array[0] = 5;
     array[1] = 9;
@@ -100,10 +100,6 @@ int main(int argc, char* argv[]) {
     array[7] = 8;
 
     sort(size);
-
-    for (i = 0; i < size; i++) {
-        printf("%d\n", array[i]);
-    }
 
     return 0;
 }
