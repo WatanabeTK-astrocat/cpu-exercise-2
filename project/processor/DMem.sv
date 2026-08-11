@@ -51,4 +51,9 @@ module DMem(
 `endif
     end
 
+    // データの書き込み
+    final begin
+        $writememh("./DMem_output.dat", mem);
+    end
+
 endmodule

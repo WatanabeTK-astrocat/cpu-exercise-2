@@ -1,4 +1,36 @@
+// #include <stdio.h>  // uncomment this line if you want to use printf
+
 volatile short* const array = (short*)0x2000;
+// volatile short array[4096];
+
+void sort(short size);
+
+// mainを一番上に
+int main(int argc, char* argv[]) {
+    short size = 8;
+
+    array[0] = 5;
+    array[1] = 9;
+    array[2] = 1;
+    array[3] = 4;
+    array[4] = 3;
+    array[5] = 2;
+    array[6] = 0;
+    array[7] = 8;
+
+    sort(size);
+
+    while (1) {
+    }
+
+    // Uncomment this if you want to print the sorted array
+    /* for (short i = 0; i < size; i++) {
+        // Print the sorted array
+        printf("%d ", array[i]);
+    } */
+
+    return 0;
+}
 
 /**
  * @brief Bubble sort implementation
@@ -18,21 +50,4 @@ void sort(short size) {
             }
         }
     }
-}
-
-int main(int argc, char* argv[]) {
-    short size = 8;
-
-    array[0] = 5;
-    array[1] = 9;
-    array[2] = 1;
-    array[3] = 4;
-    array[4] = 3;
-    array[5] = 2;
-    array[6] = 0;
-    array[7] = 8;
-
-    sort(size);
-
-    return 0;
 }

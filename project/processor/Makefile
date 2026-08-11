@@ -11,7 +11,6 @@ SOURCES = \
 	PC.sv \
 	Branch.sv \
 	Decoder.sv \
-	WriteBack.sv \
 	CPU.sv \
 	ClockDivider.sv \
 	DMem.sv \

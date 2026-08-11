@@ -78,6 +78,8 @@ module Decoder(
         LB: begin
             opInfo.isLoad       = TRUE;
             opInfo.isALUInImm   = TRUE;
+            opInfo.rfWrNum      = opInfo.rt;
+            opInfo.rfWrEnable   = TRUE;
 
             opInfo.funct        = ADD;
         end

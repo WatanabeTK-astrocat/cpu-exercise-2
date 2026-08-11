@@ -1,4 +1,4 @@
-volatile short array[4096];
+volatile short* const array = (short*)0x2000;
 
 /**
  * @brief Swap two elements in the array

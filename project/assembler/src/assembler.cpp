@@ -12,7 +12,7 @@
 #include "stringop.hpp"
 
 int registerToInt(const std::string& reg) {
-    std::cout << "reg :" << reg << std::endl;
+    // std::cout << "reg :" << reg << std::endl;
     if (reg == "zero") {
         return 0;  // Special case for the zero register
     } else if (reg == "t3") {
@@ -223,7 +223,7 @@ Assembler::assemble_line_first_pass(const std::string& instruction, const int ad
     const int rt = registerToInt(operands[0]);
     const int offset = std::stoi(offset_and_register[0]);                                                 // Convert offset to int
     const int rs = registerToInt(offset_and_register[1].substr(0, offset_and_register[1].length() - 1));  // Remove the closing parenthesis and convert to int
-    return std::make_tuple(rt, rs, offset);
+    return std::make_tuple(rt, offset, rs);
 }
 
 [[nodiscard]] std::tuple<int, int, int> Assembler::decompose_branch_operands(const std::string& operands_concat, const int addressnow) const {
@@ -261,6 +261,13 @@ Assembler::assemble_line_second_pass(const std::string& instruction, const int a
         const auto [rd, rs, rt] = decompose_Rtype_nonshift_operands(tokens[1]);  // Decompose operands into rd, rs, rt
         RType_Nonshift_Opcode opcode(0, 32);                                     // Opcode for 'add' is 0, funct is 32
         return std::make_tuple(wasLabel, opcode.toHexString(rs, rt, rd));
+    } else if (tokens[0] == "mv" || tokens[0] == "move") {
+        // Example: mv $rd, $rs
+        // this is a pseudo-instruction that can be translated to 'add $rd, $rs, $zero'
+        assert(tokens.size() == 2);                                       // Ensure the instruction has the correct number of tokens
+        const auto [rd, rs] = decompose_mv_operands(tokens[1]);           // Decompose operands into rd and rs
+        RType_Nonshift_Opcode opcode(0, 32);                              // Opcode for 'add' is 0, funct is 32
+        return std::make_tuple(wasLabel, opcode.toHexString(rs, 0, rd));  // For 'mv', rt is 0
     } else if (tokens[0] == "sub") {
         // Example: sub $rd, $rs, $rt
         assert(tokens.size() == 2);                                              // Ensure the instruction has the correct number of tokens
@@ -273,6 +280,13 @@ Assembler::assemble_line_second_pass(const std::string& instruction, const int a
         const auto [rt, rs, immediate] = decompose_Itype_operands(tokens[1]);  // Decompose operands into rt, rs, immediate
         IType_Opcode opcode(8);                                                // Opcode for 'addi' is 8
         return std::make_tuple(wasLabel, opcode.toHexString(rs, rt, immediate));
+    } else if (tokens[0] == "li") {
+        // Example: li $rt, immediate
+        // this is a pseudo-instruction that can be translated to 'addi $rt, $zero, immediate'
+        assert(tokens.size() == 2);                                              // Ensure the instruction has the correct number of tokens
+        const auto [rt, immediate] = decompose_Itype_lui_operands(tokens[1]);    // Decompose operands into rt and immediate
+        IType_Opcode opcode(8);                                                  // Opcode for 'li' is 8 (same as 'addi')
+        return std::make_tuple(wasLabel, opcode.toHexString(0, rt, immediate));  // For 'li', rs is 0
     } else if (tokens[0] == "subi") {
         // Example: subi $rt, $rs, immediate
         assert(tokens.size() == 2);                                            // Ensure the instruction has the correct number of tokens
@@ -405,29 +419,43 @@ Assembler::assemble_line_second_pass(const std::string& instruction, const int a
         const auto [rs, rt, offset] = decompose_branch_operands(tokens[1], addressnow);  // Decompose operands into rs, rt, offset
         IType_Opcode opcode(17);                                                         // Opcode for 'bne' is 17
         return std::make_tuple(wasLabel, opcode.toHexString(rs, rt, offset));
-    } else if (tokens[0] == "bge") {
-        // Example: bge $rs, $rt, offset
-        assert(tokens.size() == 2);                                                      // Ensure the instruction has the correct number of tokens
-        const auto [rs, rt, offset] = decompose_branch_operands(tokens[1], addressnow);  // Decompose operands into rs, rt, offset
-        IType_Opcode opcode(20);                                                         // Opcode for 'bge' is 20
-        return std::make_tuple(wasLabel, opcode.toHexString(rs, rt, offset));
-    } else if (tokens[0] == "bgt") {
-        // Example: bgt $rs, $rt, offset
-        assert(tokens.size() == 2);                                                      // Ensure the instruction has the correct number of tokens
-        const auto [rs, rt, offset] = decompose_branch_operands(tokens[1], addressnow);  // Decompose operands into rs, rt, offset
-        IType_Opcode opcode(23);                                                         // Opcode for 'bgt' is 23
-        return std::make_tuple(wasLabel, opcode.toHexString(rs, rt, offset));
-    } else if (tokens[0] == "ble") {
-        // Example: ble $rs, $rt, offset
-        assert(tokens.size() == 2);                                                      // Ensure the instruction has the correct number of tokens
-        const auto [rs, rt, offset] = decompose_branch_operands(tokens[1], addressnow);  // Decompose operands into rs, rt, offset
-        IType_Opcode opcode(22);                                                         // Opcode for 'ble' is 22
-        return std::make_tuple(wasLabel, opcode.toHexString(rs, rt, offset));
     } else if (tokens[0] == "blt") {
         // Example: blt $rs, $rt, offset
         assert(tokens.size() == 2);                                                      // Ensure the instruction has the correct number of tokens
         const auto [rs, rt, offset] = decompose_branch_operands(tokens[1], addressnow);  // Decompose operands into rs, rt, offset
-        IType_Opcode opcode(21);                                                         // Opcode for 'blt' is 21
+        IType_Opcode opcode(20);                                                         // Opcode for 'blt' is 20
+        return std::make_tuple(wasLabel, opcode.toHexString(rs, rt, offset));
+    } else if (tokens[0] == "bgt") {
+        // Example: bgt $rs, $rt, offset
+        // this is a pseudo-instruction that can be translated to 'blt $rt, $rs, offset'
+        assert(tokens.size() == 2);                                                      // Ensure the instruction has the correct number of tokens
+        const auto [rs, rt, offset] = decompose_branch_operands(tokens[1], addressnow);  // Decompose operands into rs, rt, offset
+        IType_Opcode opcode(20);                                                         // Opcode for 'blt' is 20
+        return std::make_tuple(wasLabel, opcode.toHexString(rt, rs, offset));
+    } else if (tokens[0] == "bge") {
+        // Example: bge $rs, $rt, offset
+        assert(tokens.size() == 2);                                                      // Ensure the instruction has the correct number of tokens
+        const auto [rs, rt, offset] = decompose_branch_operands(tokens[1], addressnow);  // Decompose operands into rs, rt, offset
+        IType_Opcode opcode(21);                                                         // Opcode for 'bge' is 21
+        return std::make_tuple(wasLabel, opcode.toHexString(rs, rt, offset));
+    } else if (tokens[0] == "ble") {
+        // Example: ble $rs, $rt, offset
+        // this is a pseudo-instruction that can be translated to 'bge $rt, $rs, offset'
+        assert(tokens.size() == 2);                                                      // Ensure the instruction has the correct number of tokens
+        const auto [rs, rt, offset] = decompose_branch_operands(tokens[1], addressnow);  // Decompose operands into rs, rt, offset
+        IType_Opcode opcode(21);                                                         // Opcode for 'bge' is 21
+        return std::make_tuple(wasLabel, opcode.toHexString(rt, rs, offset));
+    } else if (tokens[0] == "bltu") {
+        // Example: bltu $rs, $rt, offset
+        assert(tokens.size() == 2);                                                      // Ensure the instruction has the correct number of tokens
+        const auto [rs, rt, offset] = decompose_branch_operands(tokens[1], addressnow);  // Decompose operands into rs, rt, offset
+        IType_Opcode opcode(22);                                                         // Opcode for 'bltu' is 22
+        return std::make_tuple(wasLabel, opcode.toHexString(rs, rt, offset));
+    } else if (tokens[0] == "bgeu") {
+        // Example: bgeu $rs, $rt, offset
+        assert(tokens.size() == 2);                                                      // Ensure the instruction has the correct number of tokens
+        const auto [rs, rt, offset] = decompose_branch_operands(tokens[1], addressnow);  // Decompose operands into rs, rt, offset
+        IType_Opcode opcode(23);                                                         // Opcode for 'bgeu' is 23
         return std::make_tuple(wasLabel, opcode.toHexString(rs, rt, offset));
     } else if (tokens[0] == "j") {
         // Example: j target
@@ -441,39 +469,6 @@ Assembler::assemble_line_second_pass(const std::string& instruction, const int a
         const int target = labelToAbsoluteAddress(tokens[1]);  // Convert target to int
         JType_Opcode opcode(3);                                // Opcode for 'jal' is 3
         return std::make_tuple(wasLabel, opcode.toHexString(target));
-    } else if (tokens[0] == "jr") {
-        // Example: jr $rs
-        assert(tokens.size() == 2);                                      // Ensure the instruction has the correct number of tokens
-        const int rs = registerToInt(tokens[1]);                         // Convert target to int
-        IType_Opcode opcode(2);                                          // Opcode for 'jr' is 2
-        return std::make_tuple(wasLabel, opcode.toHexString(rs, 0, 0));  // For 'jr', rt and immediate are not used
-    } else if (tokens[0] == "jalr") {
-        // Example: jalr $rs
-        assert(tokens.size() == 2);                                      // Ensure the instruction has the correct number of tokens
-        const int rs = registerToInt(tokens[1]);                         // Convert target to int
-        IType_Opcode opcode(3);                                          // Opcode for 'jalr' is 3
-        return std::make_tuple(wasLabel, opcode.toHexString(rs, 0, 0));  // For 'jalr', rt and immediate are not used
-    } else if (tokens[0] == "li") {
-        // Example: li $rt, immediate
-        // this is a pseudo-instruction that can be translated to 'addi $rt, $zero, immediate'
-        assert(tokens.size() == 2);                                              // Ensure the instruction has the correct number of tokens
-        const auto [rt, immediate] = decompose_Itype_lui_operands(tokens[1]);    // Decompose operands into rt and immediate
-        IType_Opcode opcode(8);                                                  // Opcode for 'li' is 8 (same as 'addi')
-        return std::make_tuple(wasLabel, opcode.toHexString(0, rt, immediate));  // For 'li', rs is 0
-    } else if (tokens[0] == "mv" || tokens[0] == "move") {
-        // Example: mv $rd, $rs
-        // this is a pseudo-instruction that can be translated to 'add $rd, $rs, $zero'
-        assert(tokens.size() == 2);                                       // Ensure the instruction has the correct number of tokens
-        const auto [rd, rs] = decompose_mv_operands(tokens[1]);           // Decompose operands into rd and rs
-        RType_Nonshift_Opcode opcode(0, 32);                              // Opcode for 'add' is 0, funct is 32
-        return std::make_tuple(wasLabel, opcode.toHexString(rs, 0, rd));  // For 'mv', rt is 0
-    } else if (tokens[0] == "ret") {
-        // Example: ret
-        // this is a pseudo-instruction that can be translated to 'jr $ra'
-        assert(tokens.size() == 1);                                      // Ensure the instruction has the correct number of tokens
-        const int rs = 31;                                               // $ra is register 31
-        IType_Opcode opcode(2);                                          // Opcode for 'jr' is 2
-        return std::make_tuple(wasLabel, opcode.toHexString(rs, 0, 0));  // For 'ret', rt and immediate are not used
     } else if (tokens[0] == "call") {
         // Example: call target
         // this is a pseudo-instruction that can be translated to 'jal target'
@@ -481,6 +476,25 @@ Assembler::assemble_line_second_pass(const std::string& instruction, const int a
         const int target = labelToAbsoluteAddress(tokens[1]);  // Convert target to int
         JType_Opcode opcode(3);                                // Opcode for 'jal' is 3
         return std::make_tuple(wasLabel, opcode.toHexString(target));
+    } else if (tokens[0] == "jr") {
+        // Example: jr $rs
+        assert(tokens.size() == 2);                                      // Ensure the instruction has the correct number of tokens
+        const int rs = registerToInt(tokens[1]);                         // Convert target to int
+        IType_Opcode opcode(4);                                          // Opcode for 'jr' is 4
+        return std::make_tuple(wasLabel, opcode.toHexString(rs, 0, 0));  // For 'jr', rt and immediate are not used
+    } else if (tokens[0] == "ret") {
+        // Example: ret
+        // this is a pseudo-instruction that can be translated to 'jr $ra'
+        assert(tokens.size() == 1);                                      // Ensure the instruction has the correct number of tokens
+        const int rs = 31;                                               // $ra is register 31
+        IType_Opcode opcode(4);                                          // Opcode for 'jr' is 4
+        return std::make_tuple(wasLabel, opcode.toHexString(rs, 0, 0));  // For 'ret', rt and immediate are not used
+    } else if (tokens[0] == "jalr") {
+        // Example: jalr $rs
+        assert(tokens.size() == 2);                                      // Ensure the instruction has the correct number of tokens
+        const int rs = registerToInt(tokens[1]);                         // Convert target to int
+        IType_Opcode opcode(5);                                          // Opcode for 'jalr' is 5
+        return std::make_tuple(wasLabel, opcode.toHexString(rs, 0, 0));  // For 'jalr', rt and immediate are not used
     } else if (tokens[0].back() == ':') {
         // This is a label, we can ignore it in the second pass
         wasLabel = true;

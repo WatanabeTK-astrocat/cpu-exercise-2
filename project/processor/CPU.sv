@@ -27,7 +27,7 @@ module CPU(
     InsnPath imemInsnCode;      // 命令コード
     
     // Decoder
-    OpInfo dcOpinfo;
+    OpInfo dcOpInfo;
 
     // レジスタ・ファイル
     DataPath    rfRdDataA;  // 読み出しデータ rs
@@ -54,7 +54,7 @@ module CPU(
 
     // Decoder
     Decoder decoder(
-        .opInfo (dcOpinfo),
+        .opInfo (dcOpInfo),
         .insn (imemInsnCode)
     );
     
@@ -63,11 +63,11 @@ module CPU(
         .clk (clk),
         .rdDataA (rfRdDataA),
         .rdDataB (rfRdDataB),
-        .rdNumA (dcOpinfo.rs),
-        .rdNumB (dcOpinfo.rt),
+        .rdNumA (dcOpInfo.rs),
+        .rdNumB (dcOpInfo.rt),
         .wrData (rfWrData),
-        .wrNum (dcOpinfo.rfWrNum),
-        .wrEnable (dcOpinfo.rfWrEnable)
+        .wrNum (dcOpInfo.rfWrNum),
+        .wrEnable (dcOpInfo.rfWrEnable)
     );
     
     // ALU
@@ -75,14 +75,14 @@ module CPU(
         .aluOut (aluOut),
         .aluInA (aluInA),
         .aluInB (aluInB),
-        .shamt (dcOpinfo.shamt),
-        .funct (dcOpinfo.funct)
+        .shamt (dcOpInfo.shamt),
+        .funct (dcOpInfo.funct)
     );
 
     // Branch Unit
     BranchUnit branch(
         .brTaken(brTaken),
-        .opcode(dcOpinfo.opcode),
+        .opcode(dcOpInfo.opcode),
         .compInA(rfRdDataA),
         .compInB(rfRdDataB)
     );
@@ -94,17 +94,17 @@ module CPU(
         insnAddr     = pcOut;
 
         // PC update
-        if (dcOpinfo.isJumpA) begin
+        if (dcOpInfo.isJumpA) begin
             pcWrEnable = TRUE;
-            pcIn = EXPAND_JMPADDR_2_INSNADDRPATH(dcOpinfo.jmpAddr);
+            pcIn = EXPAND_JMPADDR_2_INSNADDRPATH(dcOpInfo.jmpAddr);
         end
-        else if (dcOpinfo.isJumpR) begin
+        else if (dcOpInfo.isJumpR) begin
             pcWrEnable = TRUE;
-            pcIn = pcOut + EXPAND_DATAPATH_2_INSNADDRPATH(rfRdDataA);
+            pcIn = EXPAND_DATAPATH_2_INSNADDRPATH(rfRdDataA);
         end
-        else if (dcOpinfo.isBranch) begin
+        else if (dcOpInfo.isBranch) begin
             pcWrEnable = brTaken;
-            pcIn = pcOut + EXPAND_DISPLACEMENT_2_INSNADDRPATH(dcOpinfo.imm);
+            pcIn = pcOut + EXPAND_DISPLACEMENT_2_INSNADDRPATH(dcOpInfo.imm);
         end
         else begin
             pcWrEnable = FALSE;
@@ -114,29 +114,29 @@ module CPU(
         // ======== Execute ========
         // ALU input selection and reverse for SUB
         aluInA = rfRdDataA;
-        if (dcOpinfo.isALUInImm) begin
-            aluInB[15:0] = dcOpinfo.imm;
+        if (dcOpInfo.isALUInImm) begin
+            aluInB[15:0] = dcOpInfo.imm;
             aluInB[31:16] = 16'b0;
         end
         else begin
             aluInB = rfRdDataB;
         end
-        if (dcOpinfo.funct == SUB) begin
+        if (dcOpInfo.funct == SUB) begin
             aluInB = -aluInB;
         end
 
         // ======== Memory ========
         // DMem write
-        dataWrEnable = dcOpinfo.isStore;
+        dataWrEnable = dcOpInfo.isStore;
         dataAddr     = GET_ADDR(aluOut);
         dataOut      = rfRdDataB;
 
         // ======== Write Back ========
         // Register write data
-        if (dcOpinfo.isJumpA | dcOpinfo.isJumpR) begin
+        if (dcOpInfo.isJumpA | dcOpInfo.isJumpR) begin
             rfWrData = {21'b0, pcOut} + INSN_PC_INC;
         end
-        else if (dcOpinfo.isLoad) begin
+        else if (dcOpInfo.isLoad) begin
             rfWrData = dataIn;
         end
         else begin
