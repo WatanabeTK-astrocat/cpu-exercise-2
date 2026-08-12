@@ -4,7 +4,7 @@ import Types::*;
 
 module CPU(
     input logic clk,    // クロック
-    input logic rst,    // リセット
+    input logic rst,    // リセット（1でリセット）
     
     output InsnAddrPath insnAddr,       // 命令メモリへのアドレス出力
     output DataAddrPath dataAddr,       // データバスへのアドレス出力
@@ -61,6 +61,7 @@ module CPU(
     // RegisterFile
     RegisterFile regFile(
         .clk (clk),
+        .rst (rst),
         .rdDataA (rfRdDataA),
         .rdDataB (rfRdDataB),
         .rdNumA (dcOpInfo.rs),

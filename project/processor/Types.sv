@@ -131,7 +131,10 @@ typedef struct packed {
 
 // ======== 特殊レジスタ ========
 parameter REG_ZERO = 5'b00000; // 常に0を返すレジスタ
+parameter REG_SP   = 5'b00010; // スタックポインタを格納するレジスタ
 parameter REG_RA   = 5'b11111; // リターンアドレスを格納するレジスタ
+
+parameter STACK_INIT_ADDR = 32'h0000_7ffc; // スタックポインタの初期値
 
 // ======== 便利関数 ========
 // immediate を InsnAddrPath の幅にまで符号拡張する
