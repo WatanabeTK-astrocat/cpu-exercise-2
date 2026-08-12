@@ -77,6 +77,7 @@ typedef enum OpcodePath {
     SH     = 'b101001,
     LB     = 'b100000,
     SB     = 'b101000,
+    LUI    = 'b001111,
     // 条件分岐命令
     BEQ    = 'b010000,
     BNE    = 'b010001,

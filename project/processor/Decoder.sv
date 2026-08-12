@@ -91,6 +91,14 @@ module Decoder(
 
             opInfo.funct        = ADD;
         end
+        LUI: begin
+            opInfo.isALUInImm   = TRUE;
+            opInfo.rfWrNum      = opInfo.rt;
+            opInfo.rfWrEnable   = TRUE;
+
+            opInfo.funct        = SLLI;
+            opInfo.shamt        = 16; // LUI命令は即値を16ビット左シフトする
+        end
         BEQ,
         BNE,
         BLT,
