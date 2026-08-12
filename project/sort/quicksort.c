@@ -1,4 +1,4 @@
-volatile short* const array = (short*)0x2000;
+volatile int* const array = (int*)0x2000;
 
 /**
  * @brief Swap two elements in the array
@@ -6,21 +6,21 @@ volatile short* const array = (short*)0x2000;
  * @param i
  * @param j
  */
-void swap(short i, short j) {
-    short temp = array[i];
+void swap(int i, int j) {
+    int temp = array[i];
     array[i] = array[j];
     array[j] = temp;
 }
 
 /**
- * @brief Return the median of three short
+ * @brief Return the median of three int
  *
  * @param a
  * @param b
  * @param c
- * @return short
+ * @return int
  */
-short median3(short a, short b, short c) {
+int median3(int a, int b, int c) {
     if (a < b) {
         if (b < c) {
             return b;
@@ -40,17 +40,17 @@ short median3(short a, short b, short c) {
     }
 }
 
-void partition(short left, short right) {
+void partition(int left, int right) {
     if (left >= right) {
         return;
     }
 
-    short pivot_l = array[left];
-    short pivot_r = array[right];
-    short pivot_m = array[((right + left) >> 1)];
-    short pivot = median3(pivot_l, pivot_m, pivot_r);
-    short low = left;
-    short high = right;
+    int pivot_l = array[left];
+    int pivot_r = array[right];
+    int pivot_m = array[((right + left) >> 1)];
+    int pivot = median3(pivot_l, pivot_m, pivot_r);
+    int low = left;
+    int high = right;
     while (1) {
         while (low < right && array[low] < pivot) {
             low++;
@@ -83,12 +83,12 @@ void partition(short left, short right) {
  *
  * @param size
  */
-void sort(short size) {
+void sort(int size) {
     partition(0, size - 1);
 }
 
 int main(int argc, char* argv[]) {
-    short size = 8;
+    int size = 8;
 
     array[0] = 5;
     array[1] = 9;
@@ -100,6 +100,9 @@ int main(int argc, char* argv[]) {
     array[7] = 8;
 
     sort(size);
+
+    while (1) {
+    }
 
     return 0;
 }

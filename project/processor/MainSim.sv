@@ -86,7 +86,7 @@ module MainSim;
 		//
 
 		// 100 サイクル 
-		#(CYCLE_TIME*1000)
+		#(CYCLE_TIME*100000)
 		$finish;
     end
 

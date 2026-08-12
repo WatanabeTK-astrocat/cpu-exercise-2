@@ -1,13 +1,13 @@
 // #include <stdio.h>  // uncomment this line if you want to use printf
 
-volatile short* const array = (short*)0x2000;
-// volatile short array[4096];
+volatile int* const array = (int*)0x2000;
+// volatile int array[4096];
 
-void sort(short size);
+void sort(int size);
 
 // mainを一番上に
 int main(int argc, char* argv[]) {
-    short size = 8;
+    int size = 8;
 
     array[0] = 5;
     array[1] = 9;
@@ -39,12 +39,12 @@ int main(int argc, char* argv[]) {
  *
  * @param size
  */
-void sort(short size) {
-    short i, j;
+void sort(int size) {
+    int i, j;
     for (i = 0; i < size - 1; i++) {
         for (j = 0; j < size - i - 1; j++) {
             if (array[j] > array[j + 1]) {
-                short temp = array[j];
+                int temp = array[j];
                 array[j] = array[j + 1];
                 array[j + 1] = temp;
             }
