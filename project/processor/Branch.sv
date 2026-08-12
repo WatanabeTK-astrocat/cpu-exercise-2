@@ -21,9 +21,9 @@ module BranchUnit(
         BNE:
             brTaken = (compInA != compInB) ? TRUE : FALSE;
         BLT:
-            brTaken = (compInA < compInB)  ? TRUE : FALSE;
+            brTaken = ($signed(compInA) < $signed(compInB))  ? TRUE : FALSE;
         BGE:
-            brTaken = (compInA >= compInB) ? TRUE : FALSE;
+            brTaken = ($signed(compInA) >= $signed(compInB)) ? TRUE : FALSE;
         BLTU:
             brTaken = ($unsigned(compInA) < $unsigned(compInB)) ? TRUE : FALSE;
         BGEU:

@@ -115,8 +115,7 @@ module CPU(
         // ALU input selection and reverse for SUB
         aluInA = rfRdDataA;
         if (dcOpInfo.isALUInImm) begin
-            aluInB[15:0] = dcOpInfo.imm;
-            aluInB[31:16] = 16'b0;
+            aluInB = {{16{dcOpInfo.imm[15]}}, dcOpInfo.imm};
         end
         else begin
             aluInB = rfRdDataB;

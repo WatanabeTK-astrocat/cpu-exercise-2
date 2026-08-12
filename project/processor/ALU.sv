@@ -33,14 +33,14 @@ module ALU(
         NOR:
             aluOut = ~(aluInA | aluInB);
         SLT:
-            aluOut[0] = aluInA < aluInB ? TRUE: FALSE;
+            aluOut[0] = ($signed(aluInA) < $signed(aluInB)) ? TRUE: FALSE;
         // シフト演算
         SLLI:
-            aluOut = aluInA << shamt;
+            aluOut = $unsigned(aluInB) << shamt;
         SRLI:
-            aluOut = aluInA >> shamt;
+            aluOut = $unsigned(aluInB) >> shamt;
         SRAI:
-            aluOut = aluInA >>> shamt;
+            aluOut = $signed(aluInB) >>> shamt;
         default:
             aluOut = '0;
         endcase
