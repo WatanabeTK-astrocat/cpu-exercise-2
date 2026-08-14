@@ -12,7 +12,7 @@ import Types::*;
 //
 module MainSim;
 
-    parameter CYCLE_TIME = 200; // 1サイクルを 200ns に設定
+    parameter CYCLE_TIME = 50; // 1サイクルを 50ns に設定
 
     integer cycle;        // サイクル
     integer cycleX4;    // 4倍速サイクル
@@ -85,8 +85,8 @@ module MainSim;
 		// シミュレーション開始
 		//
 
-		// 100 サイクル 
-		#(CYCLE_TIME*1000)
+		// 10000 サイクル 
+		#(CYCLE_TIME*10000)
 		$finish;
     end
 

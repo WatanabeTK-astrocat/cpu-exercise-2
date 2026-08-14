@@ -11,6 +11,7 @@ module HazardUnit(
                                         // デコードされた直後のものをそのまま入れるだけで良い
     input OpInfo        EX_opInfoIn,    // 実行ステージにおける命令情報
     input OpInfo        MEM_opInfoIn,   // メモリステージにおける命令情報
+    input logic         MEM_brTaken,    // メモリステージにおける条件分岐成立フラグ（1で成立）
 
     output logic        IF_stall,       // IFステージ ストール信号（1でPCを保持）
     output logic        IF_ID_flush,    // IF/IDレジスタ フラッシュ信号（1でIF/IDレジスタをリセット）
@@ -33,20 +34,19 @@ module HazardUnit(
         )) begin
             // Load-use hazard
             IF_stall = TRUE;
-            ID_opInfoOut = '0; // ID/EXレジスタをリセット
+            ID_opInfoOut = '0; // ID/EXレジスタの出力を0にしておく
         end
-        if (MEM_opInfoIn.isJumpA || MEM_opInfoIn.isJumpR || MEM_opInfoIn.isBranch) begin
-            // Branch hazard
+        if (ID_opInfoIn.isJumpA) begin
+            // JumpA hazard
+            IF_stall = TRUE;
+        end
+        if (MEM_opInfoIn.isJumpR || (MEM_opInfoIn.isBranch && MEM_brTaken)) begin
+            // Branch hazard (常に分岐しないと予測するため、分岐が成立した場合はフラッシュする)
+            ID_opInfoOut = '0; // ID/EXレジスタの出力を0にしておく
             IF_ID_flush = TRUE;
             ID_EX_flush = TRUE;
             EX_MEM_flush = TRUE;
         end
-
-        // ======== フラッシュ判定 ========
-        // TODO: Branch hazard
-        //if (MEM_opInfo.isBranch && MEM_opInfo.brTaken) begin
-        //   ID_EX_flush = TRUE;
-        //end
 
     end
 

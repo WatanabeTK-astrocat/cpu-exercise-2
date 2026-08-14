@@ -105,6 +105,7 @@ module CPU(
         .ID_opInfoIn (ID_rawopInfo),
         .EX_opInfoIn (EX_opInfo),
         .MEM_opInfoIn (MEM_opInfo),
+        .MEM_brTaken (MEM_brTaken),
         .IF_stall (IF_stall),
         .IF_ID_flush (IF_ID_flush),
         .ID_EX_flush (ID_EX_flush),
@@ -246,9 +247,9 @@ module CPU(
         end
 
         // PC update
-        if (MEM_opInfo.isJumpA) begin
+        if (ID_opInfo.isJumpA) begin
             pcWrEnable = TRUE;
-            pcIn = EXPAND_JMPADDR_2_INSNADDRPATH(MEM_opInfo.jmpAddr);
+            pcIn = EXPAND_JMPADDR_2_INSNADDRPATH(ID_opInfo.jmpAddr);
         end
         else if (MEM_opInfo.isJumpR) begin
             pcWrEnable = TRUE;
