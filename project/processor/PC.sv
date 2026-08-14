@@ -9,13 +9,18 @@ module PC(
     input logic clk,    // クロック
     input logic rst,    // リセット
 
-    output InsnAddrPath addrOut,    // アドレス出力
-
     input InsnAddrPath addrIn,      // 外部書き込みをする時のアドレス
-    input logic wrEnable            // 外部書き込み有効
+    input logic wrEnable,           // 外部書き込み有効
+    input logic stall,              // ストール信号（1でPCを更新しない）
+
+    output InsnAddrPath addrOut     // アドレス出力
 );
 
+    // ======== 制御線・データ線 ========
+
     InsnAddrPath pc;
+
+    // ======== 論理回路 ========
 
     always_ff @(posedge clk or posedge rst) begin
         if (rst) begin
@@ -24,7 +29,7 @@ module PC(
         else if (wrEnable) begin
             pc <= addrIn;
         end
-        else begin
+        else if (!stall) begin
             pc <= pc + INSN_PC_INC;
         end
     end

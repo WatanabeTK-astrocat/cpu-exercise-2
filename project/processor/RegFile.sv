@@ -2,24 +2,22 @@
 // 2 Read / 1 Write レジスタ・ファイル
 //
 
-
-// 基本的な型を定義したファイルの読み込み
+import BasicTypes::*;
 import Types::*;
-
 
 module RegisterFile(
 	input logic clk,			// クロック
     input logic rst,			// リセット（1でリセット）
-	
-	output DataPath rdDataA,	// 読み出しデータA
-	output DataPath rdDataB,	// 読み出しデータB
 
 	input RegNumPath rdNumA,	// 読み出しレジスタ番号A
 	input RegNumPath rdNumB,	// 読み出しレジスタ番号B
 
 	input DataPath   wrData,	// 書き込みデータ
 	input RegNumPath wrNum,	    // 書き込みレジスタ番号
-	input logic      wrEnable	// 書き込み制御 1の場合，書き込みを行う
+	input logic      wrEnable,  // 書き込み制御 1の場合，書き込みを行う
+
+	output DataPath rdDataA,	// 読み出しデータA
+	output DataPath rdDataB 	// 読み出しデータB
 );
 
 	// 実際に値が入るストレージ

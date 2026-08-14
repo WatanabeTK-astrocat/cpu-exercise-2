@@ -10,7 +10,13 @@ SOURCES = \
 	ALU.sv \
 	PC.sv \
 	Branch.sv \
-	Decoder.sv \
+	Decode.sv \
+	Reg_IF_ID.sv \
+	Reg_ID_EX.sv \
+	Reg_EX_MEM.sv \
+	Reg_MEM_WB.sv \
+	ForwardingUnit.sv \
+	HazardUnit.sv \
 	CPU.sv \
 	ClockDivider.sv \
 	DMem.sv \

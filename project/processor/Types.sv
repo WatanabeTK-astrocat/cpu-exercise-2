@@ -130,6 +130,8 @@ typedef struct packed {
     logic isJumpR;      // レジスタによるジャンプ命令かどうか
 } OpInfo;
 
+parameter NOP_INSN = 32'b0;
+
 // ======== 特殊レジスタ ========
 parameter REG_ZERO = 5'b00000; // 常に0を返すレジスタ
 parameter REG_SP   = 5'b00010; // スタックポインタを格納するレジスタ
