@@ -25,7 +25,7 @@ SOURCES = \
 	Main.sv \
 	MainSim.sv \
 
-SOURCE_ROOT = $(CPU_EXERCISE_ROOT)/project/processor/
+SOURCE_ROOT = $(CPU_EXERCISE_ROOT)/project/processor/src/
 DEPS_RTL = \
 	$(SOURCES:%=$(SOURCE_ROOT)%)
 
@@ -41,7 +41,7 @@ VERILATOR_OPTIONS = \
 
 all: obj_dir/V$(TOPLEVEL_MODULE)
 
-obj_dir/V$(TOPLEVEL_MODULE): $(SOURCES)
+obj_dir/V$(TOPLEVEL_MODULE): $(SOURCES:%=src/%)
 	$(VERILATOR) $(VERILATOR_OPTIONS) $(DEPS_RTL)
 
 sim: obj_dir/V$(TOPLEVEL_MODULE)
