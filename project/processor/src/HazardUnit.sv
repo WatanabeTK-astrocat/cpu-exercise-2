@@ -39,6 +39,7 @@ module HazardUnit(
         if (ID_opInfoIn.isJumpA) begin
             // JumpA hazard
             IF_stall = TRUE;
+            IF_ID_flush = TRUE;
         end
         if (MEM_opInfoIn.isJumpR || (MEM_opInfoIn.isBranch && MEM_brTaken)) begin
             // Branch hazard (常に分岐しないと予測するため、分岐が成立した場合はフラッシュする)
