@@ -1,88 +1,64 @@
 [*]
 [*] GTKWave Analyzer v3.3.129 (w)1999-2026 BSI
-[*] Wed Aug 12 06:29:53 2026
+[*] Mon Aug 17 00:31:12 2026
 [*]
-[dumpfile] "/Users/tkkmbp/Desktop/desktop/Local_research/cpu-exercise-2/project/processor/wave.vcd"
-[dumpfile_mtime] "Wed Aug 12 06:24:49 2026"
-[dumpfile_size] 4718635
-[savefile] "/Users/tkkmbp/Desktop/desktop/Local_research/cpu-exercise-2/project/processor/wave.gtkw"
+[dumpfile] "/Users/tkk/Desktop/desktop/Local_Research/cpu-exercise-2/project/processor/wave.vcd"
+[dumpfile_mtime] "Sun Aug 16 14:21:09 2026"
+[dumpfile_size] 4878762
+[savefile] "/Users/tkk/Desktop/desktop/Local_Research/cpu-exercise-2/project/processor/wave.gtkw"
 [timestart] 0
-[size] 1792 1067
-[pos] 2 1079
-*0.000000 3 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[size] 2560 1055
+[pos] -1 -1
+*-6.000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] MainSim.
 [treeopen] MainSim.main.
 [treeopen] MainSim.main.cpu.
 [sst_width] 253
-[signals_width] 307
+[signals_width] 210
 [sst_expanded] 1
-[sst_vpaned_height] 320
-@25
-MainSim.main.cpu.pcOut[10:0]
-MainSim.main.cpu.dcOpInfo.opcode[5:0]
-MainSim.main.cpu.dcOpInfo.funct[5:0]
-MainSim.main.cpu.dcOpInfo.imm[15:0]
-MainSim.main.cpu.dcOpInfo.isALUInImm
-MainSim.main.cpu.dcOpInfo.isBranch
-MainSim.main.cpu.dcOpInfo.isJumpA
-MainSim.main.cpu.dcOpInfo.isJumpR
-MainSim.main.cpu.dcOpInfo.isLoad
-MainSim.main.cpu.dcOpInfo.isStore
-MainSim.main.cpu.dcOpInfo.jmpAddr[25:0]
-MainSim.main.cpu.dcOpInfo.rfWrEnable
-MainSim.main.cpu.dcOpInfo.rfWrNum[4:0]
-MainSim.main.cpu.dcOpInfo.rs[4:0]
-MainSim.main.cpu.dcOpInfo.rt[4:0]
-MainSim.main.cpu.dcOpInfo.shamt[4:0]
-MainSim.main.cpu.rfRdDataA[31:0]
-MainSim.main.cpu.rfRdDataB[31:0]
-MainSim.main.cpu.aluInA[31:0]
-MainSim.main.cpu.aluInB[31:0]
-MainSim.main.cpu.aluOut[31:0]
-@c00025
-MainSim.main.cpu.rfWrData[31:0]
-@29
-(0)MainSim.main.cpu.rfWrData[31:0]
-(1)MainSim.main.cpu.rfWrData[31:0]
-(2)MainSim.main.cpu.rfWrData[31:0]
-(3)MainSim.main.cpu.rfWrData[31:0]
-(4)MainSim.main.cpu.rfWrData[31:0]
-(5)MainSim.main.cpu.rfWrData[31:0]
-(6)MainSim.main.cpu.rfWrData[31:0]
-(7)MainSim.main.cpu.rfWrData[31:0]
-(8)MainSim.main.cpu.rfWrData[31:0]
-(9)MainSim.main.cpu.rfWrData[31:0]
-(10)MainSim.main.cpu.rfWrData[31:0]
-(11)MainSim.main.cpu.rfWrData[31:0]
-(12)MainSim.main.cpu.rfWrData[31:0]
-(13)MainSim.main.cpu.rfWrData[31:0]
-(14)MainSim.main.cpu.rfWrData[31:0]
-(15)MainSim.main.cpu.rfWrData[31:0]
-(16)MainSim.main.cpu.rfWrData[31:0]
-(17)MainSim.main.cpu.rfWrData[31:0]
-(18)MainSim.main.cpu.rfWrData[31:0]
-(19)MainSim.main.cpu.rfWrData[31:0]
-(20)MainSim.main.cpu.rfWrData[31:0]
-(21)MainSim.main.cpu.rfWrData[31:0]
-(22)MainSim.main.cpu.rfWrData[31:0]
-(23)MainSim.main.cpu.rfWrData[31:0]
-(24)MainSim.main.cpu.rfWrData[31:0]
-(25)MainSim.main.cpu.rfWrData[31:0]
-(26)MainSim.main.cpu.rfWrData[31:0]
-(27)MainSim.main.cpu.rfWrData[31:0]
-(28)MainSim.main.cpu.rfWrData[31:0]
-(29)MainSim.main.cpu.rfWrData[31:0]
-(30)MainSim.main.cpu.rfWrData[31:0]
-(31)MainSim.main.cpu.rfWrData[31:0]
-@1401205
+[sst_vpaned_height] 316
+@23
+MainSim.main.cpu.insnAddr[10:0]
+@c02028
+^1 /Users/tkk/Desktop/desktop/Local_Research/cpu-exercise-2/project/processor/enum_opcode.gtkw
+MainSim.main.cpu.ID_opInfo.opcode[5:0]
+@28
+(0)MainSim.main.cpu.ID_opInfo.opcode[5:0]
+(1)MainSim.main.cpu.ID_opInfo.opcode[5:0]
+(2)MainSim.main.cpu.ID_opInfo.opcode[5:0]
+(3)MainSim.main.cpu.ID_opInfo.opcode[5:0]
+(4)MainSim.main.cpu.ID_opInfo.opcode[5:0]
+(5)MainSim.main.cpu.ID_opInfo.opcode[5:0]
+@1401208
 -group_end
-@25
-MainSim.main.cpu.dataAddr[15:0]
-MainSim.main.cpu.dataIn[31:0]
-MainSim.main.cpu.dataOut[31:0]
-MainSim.main.cpu.dataWrEnable
-MainSim.main.cpu.pcIn[10:0]
-MainSim.main.cpu.brTaken
-MainSim.main.cpu.pcWrEnable
+@2028
+^2 /Users/tkk/Desktop/desktop/Local_Research/cpu-exercise-2/project/processor/enum_funct.gtkw
+MainSim.main.cpu.ID_opInfo.funct[5:0]
+@22
+MainSim.main.cpu.ID_opInfo.rs[4:0]
+MainSim.main.cpu.ID_opInfo.rt[4:0]
+@28
+MainSim.main.cpu.ID_opInfo.isALUInImm
+MainSim.main.cpu.ID_opInfo.isBranch
+MainSim.main.cpu.ID_opInfo.isJumpA
+MainSim.main.cpu.ID_opInfo.isJumpR
+MainSim.main.cpu.ID_opInfo.isLoad
+MainSim.main.cpu.ID_opInfo.isStore
+MainSim.main.cpu.ID_opInfo.rfWrEnable
+@22
+MainSim.main.cpu.ID_opInfo.rfWrNum[4:0]
+@2028
+^1 /Users/tkk/Desktop/desktop/Local_Research/cpu-exercise-2/project/processor/enum_opcode.gtkw
+MainSim.main.cpu.EX_opInfo.opcode[5:0]
+^2 /Users/tkk/Desktop/desktop/Local_Research/cpu-exercise-2/project/processor/enum_funct.gtkw
+MainSim.main.cpu.EX_opInfo.funct[5:0]
+^1 /Users/tkk/Desktop/desktop/Local_Research/cpu-exercise-2/project/processor/enum_opcode.gtkw
+MainSim.main.cpu.MEM_opInfo.opcode[5:0]
+^2 /Users/tkk/Desktop/desktop/Local_Research/cpu-exercise-2/project/processor/enum_funct.gtkw
+MainSim.main.cpu.MEM_opInfo.funct[5:0]
+@28
+MainSim.main.cpu.IF_stall
+MainSim.main.cpu.IF_ID_flush
+MainSim.main.cpu.ID_EX_flush
 [pattern_trace] 1
 [pattern_trace] 0
