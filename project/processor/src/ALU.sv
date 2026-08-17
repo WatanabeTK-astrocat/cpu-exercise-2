@@ -14,15 +14,23 @@ module ALU(
     input FunctEnum funct
 );
 
+    DataPath aluInB_signed;
+
     always_comb begin
         
         aluOut = '0;
 
+        if (funct == SUB) begin
+            aluInB_signed = -aluInB;
+        end else begin
+            aluInB_signed = aluInB;
+        end
+
         unique case (funct)
         // 算術演算
         ADD,
-        SUB: // 符号反転は CPU 側で行う
-            aluOut = aluInA + aluInB;
+        SUB:
+            aluOut = aluInA + aluInB_signed;
         // 論理演算
         AND:
             aluOut = aluInA & aluInB;

@@ -225,9 +225,6 @@ module CPU(
         else begin
             EX_aluInB = EX_fwdDataB;
         end
-        if (EX_opInfo.funct == SUB) begin
-            EX_aluInB = -EX_aluInB;
-        end
 
         // ======== MEMory ========
         // DMem write
