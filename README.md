@@ -1,6 +1,7 @@
 # CPU 設計演習
 
 ## はじめに
+
 ![fpga](docs/fpga.jpg)
 
 本実験では，FPGA (Field Programmable Gate Array) と呼ばれる「回路を書きかえられる」 LSI を用いて，マイクロプロセッサの設計と作成をおこないます．上の写真は，FPGA が搭載された評価ボードの写真です．写真中央の銀色のチップが FPGA です．
@@ -10,6 +11,7 @@
 本実験は[スケジュール](docs/schedule.md)にしたがって進めてください．
 
 ## 目次
+
 この Wiki の内容は以下のとおりです：
 
 * [スケジュール](docs/schedule.md)
@@ -18,11 +20,11 @@
 * [チュートリアル](docs/tutorial.md)
 * [高速化に向けて](docs/optimize.md)
 * 言語
-    * [Verilogの記法について](docs/verilog.md)
-    * [HDLの記述例](docs/hdl.md)
+  * [Verilogの記法について](docs/verilog.md)
+  * [HDLの記述例](docs/hdl.md)
 * [デバッグ](docs/debug.md)
 * [アセンブルについて](docs/assembler.md)
 * [性能評価の仕方](docs/evaluation.md)
 * ツール（これらは現在は使用していません）
-    * [ModelSim](docs/modelsim.md)
-    * [Quartus Prime](docs/quartus.md)
+  * [ModelSim](docs/modelsim.md)
+  * [Quartus Prime](docs/quartus.md)
