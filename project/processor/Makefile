@@ -8,8 +8,8 @@ SOURCES = \
 	Types.sv \
 	RegFile.sv \
 	ALU.sv \
-	PC.sv \
 	Branch.sv \
+	PC.sv \
 	Decode.sv \
 	Reg_IF_ID.sv \
 	Reg_ID_EX.sv \

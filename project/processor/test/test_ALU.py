@@ -297,7 +297,6 @@ async def slt_4(dut):
 # Shift Operation Tests
 # ================================================================
 
-
 @cocotb.test()
 async def sll_1(dut):
     """Test ALU with SLL operation"""
@@ -367,3 +366,35 @@ async def sra_2(dut):
     # Act & Assert
     await cocotb.triggers.Timer(10, unit='ns')
     assert dut.aluOut.value == 0b11111111111111111111111111111100, f"SRA operation failed: {dut.aluOut.value} != 0b11111111111111111111111111111100"
+
+# ================================================================
+# NOP Tests
+# ================================================================
+
+@cocotb.test()
+async def nop_1(dut):
+    """Test ALU with NOP operation"""
+
+    # Arrange
+    dut.aluInA.value = 15
+    dut.aluInB.value = 54
+    dut.funct.value = 1  # Assuming op=1 corresponds to NOP
+    dut.shamt.value = 2   # shamt should affect NOP
+
+    # Act & Assert
+    await cocotb.triggers.Timer(10, unit='ns')
+    assert dut.aluOut.value == 0, f"NOP operation failed: {dut.aluOut.value} != 0"
+
+@cocotb.test()
+async def nop_2(dut):
+    """Test ALU with NOP operation"""
+
+    # Arrange
+    dut.aluInA.value = 15
+    dut.aluInB.value = 54
+    dut.funct.value = 63  # Assuming op=63 corresponds to NOP
+    dut.shamt.value = 2   # shamt should affect NOP
+
+    # Act & Assert
+    await cocotb.triggers.Timer(10, unit='ns')
+    assert dut.aluOut.value == 0, f"NOP operation failed: {dut.aluOut.value} != 0"
