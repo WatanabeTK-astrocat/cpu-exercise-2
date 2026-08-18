@@ -9,7 +9,7 @@ async def normal_operation(dut):
     # Arrange
     # このようにリセットしないと、なぜかテストケース間でpcの値がもつれ込んでしまう
     dut.rst.value = 1
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     dut.rst.value = 0
 
     c = Clock(dut.clk, 10, unit="ns")
@@ -17,11 +17,11 @@ async def normal_operation(dut):
     # Act & Assert
     assert dut.addrOut.value == 0, f"Normal operation failed: {dut.addrOut.value} != 0"
     cocotb.start_soon(c.start())
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     assert dut.addrOut.value == 4, f"Normal operation failed: {dut.addrOut.value} != 4"
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     assert dut.addrOut.value == 8, f"Normal operation failed: {dut.addrOut.value} != 8"
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     assert dut.addrOut.value == 12, f"Normal operation failed: {dut.addrOut.value} != 12"
 
 @cocotb.test()
@@ -31,7 +31,7 @@ async def reset(dut):
     # Arrange
     # このようにリセットしないと、なぜかテストケース間でpcの値がもつれ込んでしまう
     dut.rst.value = 1
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     dut.rst.value = 0
 
     c = Clock(dut.clk, 10, unit="ns")
@@ -39,13 +39,13 @@ async def reset(dut):
     # Act & Assert
     assert dut.addrOut.value == 0, f"Normal operation failed: {dut.addrOut.value} != 0"
     cocotb.start_soon(c.start())
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     assert dut.addrOut.value == 4, f"Normal operation failed: {dut.addrOut.value} != 4"
     dut.rst.value = 1
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     assert dut.addrOut.value == 0, f"Normal operation failed: {dut.addrOut.value} != 0"
     dut.rst.value = 0
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     assert dut.addrOut.value == 4, f"Normal operation failed: {dut.addrOut.value} != 4"
 
 @cocotb.test()
@@ -55,7 +55,7 @@ async def write(dut):
     # Arrange
     # このようにリセットしないと、なぜかテストケース間でpcの値がもつれ込んでしまう
     dut.rst.value = 1
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     dut.rst.value = 0
 
     c = Clock(dut.clk, 10, unit="ns")
@@ -63,14 +63,14 @@ async def write(dut):
     # Act & Assert
     assert dut.addrOut.value == 0, f"Normal operation failed: {dut.addrOut.value} != 0"
     cocotb.start_soon(c.start())
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     assert dut.addrOut.value == 4, f"Normal operation failed: {dut.addrOut.value} != 4"
     dut.wrEnable.value = 1
     dut.addrIn.value = 400
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     assert dut.addrOut.value == 400, f"Normal operation failed: {dut.addrOut.value} != 400"
     dut.wrEnable.value = 0
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     assert dut.addrOut.value == 404, f"Normal operation failed: {dut.addrOut.value} != 404"
 
 @cocotb.test()
@@ -80,7 +80,7 @@ async def stall(dut):
     # Arrange
     # このようにリセットしないと、なぜかテストケース間でpcの値がもつれ込んでしまう
     dut.rst.value = 1
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     dut.rst.value = 0
 
     c = Clock(dut.clk, 10, unit="ns")
@@ -88,15 +88,15 @@ async def stall(dut):
     # Act & Assert
     assert dut.addrOut.value == 0, f"Normal operation failed: {dut.addrOut.value} != 0"
     cocotb.start_soon(c.start())
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     assert dut.addrOut.value == 4, f"Normal operation failed: {dut.addrOut.value} != 4"
     dut.stall.value = 1
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     assert dut.addrOut.value == 4, f"Normal operation failed: {dut.addrOut.value} != 4"
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     assert dut.addrOut.value == 4, f"Normal operation failed: {dut.addrOut.value} != 4"
     dut.stall.value = 0
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     assert dut.addrOut.value == 8, f"Normal operation failed: {dut.addrOut.value} != 8"
 
 @cocotb.test()
@@ -106,7 +106,7 @@ async def stall_and_write(dut):
     # Arrange
     # このようにリセットしないと、なぜかテストケース間でpcの値がもつれ込んでしまう
     dut.rst.value = 1
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     dut.rst.value = 0
 
     c = Clock(dut.clk, 10, unit="ns")
@@ -114,18 +114,18 @@ async def stall_and_write(dut):
     # Act & Assert
     assert dut.addrOut.value == 0, f"Normal operation failed: {dut.addrOut.value} != 0"
     cocotb.start_soon(c.start())
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     assert dut.addrOut.value == 4, f"Normal operation failed: {dut.addrOut.value} != 4"
     dut.stall.value = 1
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     assert dut.addrOut.value == 4, f"Normal operation failed: {dut.addrOut.value} != 4"
     dut.wrEnable.value = 1
     dut.addrIn.value = 400
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     assert dut.addrOut.value == 400, f"Normal operation failed: {dut.addrOut.value} != 400"
     dut.wrEnable.value = 0
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     assert dut.addrOut.value == 400, f"Normal operation failed: {dut.addrOut.value} != 400"
     dut.stall.value = 0
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     assert dut.addrOut.value == 404, f"Normal operation failed: {dut.addrOut.value} != 404"

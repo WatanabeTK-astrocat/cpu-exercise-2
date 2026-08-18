@@ -16,7 +16,7 @@ async def addition_1(dut):
     dut.shamt.value = 0
 
     # Act & Assert
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     assert dut.aluOut.value == 15, f"Addition failed: {dut.aluOut.value} != 15"
 
 @cocotb.test()
@@ -30,7 +30,7 @@ async def addition_2(dut):
     dut.shamt.value = 5   # shamt should not affect addition
 
     # Act & Assert
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     assert dut.aluOut.value == 15, f"Addition failed: {dut.aluOut.value} != 15"
 
 @cocotb.test()
@@ -44,7 +44,7 @@ async def addition_3(dut):
     dut.shamt.value = 4   # shamt should not affect addition
 
     # Act & Assert
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     assert dut.aluOut.value == -8 + 2**32, f"Addition failed: {dut.aluOut.value} != -8 + 2**32"
 
 @cocotb.test()
@@ -58,7 +58,7 @@ async def addition_4(dut):
     dut.shamt.value = 3   # shamt should not affect addition
 
     # Act & Assert
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     assert dut.aluOut.value == 0, f"Addition failed: {dut.aluOut.value} != 0"
 
 @cocotb.test()
@@ -72,7 +72,7 @@ async def addition_5(dut):
     dut.shamt.value = 5   # shamt should not affect addition
 
     # Act & Assert
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     assert dut.aluOut.value == 2147483748, f"Addition failed: {dut.aluOut.value} != 2147483748"
 
 @cocotb.test()
@@ -86,7 +86,7 @@ async def addition_6(dut):
     dut.shamt.value = 4   # shamt should not affect addition
 
     # Act & Assert
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     assert dut.aluOut.value == 2, f"Addition failed: {dut.aluOut.value} != 2"
 
 # ================================================================
@@ -104,7 +104,7 @@ async def subtraction_1(dut):
     dut.shamt.value = 0
 
     # Act & Assert
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     assert dut.aluOut.value == 9, f"Subtraction failed: {dut.aluOut.value} != 9"
 
 @cocotb.test()
@@ -118,7 +118,7 @@ async def subtraction_2(dut):
     dut.shamt.value = 5   # shamt should not affect subtraction
 
     # Act & Assert
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     assert dut.aluOut.value == -9 + 2**32, f"Subtraction failed: {dut.aluOut.value} != -9+2**32"
 
 @cocotb.test()
@@ -132,7 +132,7 @@ async def subtraction_3(dut):
     dut.shamt.value = 15   # shamt should not affect subtraction
 
     # Act & Assert
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     assert dut.aluOut.value == 15, f"Subtraction failed: {dut.aluOut.value} != 15"
 
 @cocotb.test()
@@ -146,7 +146,7 @@ async def subtraction_4(dut):
     dut.shamt.value = 15   # shamt should not affect subtraction
 
     # Act & Assert
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     assert dut.aluOut.value == 3, f"Subtraction failed: {dut.aluOut.value} != 3"
 
 @cocotb.test()
@@ -160,7 +160,7 @@ async def subtraction_5(dut):
     dut.shamt.value = 15   # shamt should not affect subtraction
 
     # Act & Assert
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     assert dut.aluOut.value == 2147483548, f"Subtraction failed: {dut.aluOut.value} != 2147483548"
 
 @cocotb.test()
@@ -174,7 +174,7 @@ async def subtraction_6(dut):
     dut.shamt.value = 15   # shamt should not affect subtraction
 
     # Act & Assert
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     assert dut.aluOut.value == 1, f"Subtraction failed: {dut.aluOut.value} != 1"
 
 # ================================================================
@@ -192,7 +192,7 @@ async def and_1(dut):
     dut.shamt.value = 15   # shamt should not affect AND
 
     # Act & Assert
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     assert dut.aluOut.value == 0b00000000000000000000000000001000, f"AND operation failed: {dut.aluOut.value} != 0b00000000000000000000000000001000"
 
 @cocotb.test()
@@ -206,7 +206,7 @@ async def or_1(dut):
     dut.shamt.value = 15   # shamt should not affect OR
 
     # Act & Assert
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     assert dut.aluOut.value == 0b00000000000000000000000000001110, f"OR operation failed: {dut.aluOut.value} != 0b00000000000000000000000000001110"
 
 @cocotb.test()
@@ -220,7 +220,7 @@ async def xor_1(dut):
     dut.shamt.value = 15   # shamt should not affect XOR
 
     # Act & Assert
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     assert dut.aluOut.value == 0b00000000000000000000000000000110, f"XOR operation failed: {dut.aluOut.value} != 0b00000000000000000000000000000110"
 
 @cocotb.test()
@@ -234,7 +234,7 @@ async def nor_1(dut):
     dut.shamt.value = 15   # shamt should not affect NOR
 
     # Act & Assert
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     assert dut.aluOut.value == 0b11111111111111111111111111110001, f"NOR operation failed: {dut.aluOut.value} != 0b11111111111111111111111111110001"
 
 @cocotb.test()
@@ -248,7 +248,7 @@ async def slt_1(dut):
     dut.shamt.value = 15   # shamt should not affect SLT
 
     # Act & Assert
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     assert dut.aluOut.value == 1, f"SLT operation failed: {dut.aluOut.value} != 1"
 
 @cocotb.test()
@@ -262,7 +262,7 @@ async def slt_2(dut):
     dut.shamt.value = 15   # shamt should not affect SLT
 
     # Act & Assert
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     assert dut.aluOut.value == 0, f"SLT operation failed: {dut.aluOut.value} != 0"
 
 @cocotb.test()
@@ -276,7 +276,7 @@ async def slt_3(dut):
     dut.shamt.value = 15   # shamt should not affect SLT
 
     # Act & Assert
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     assert dut.aluOut.value == 0, f"SLT operation failed: {dut.aluOut.value} != 0"
 
 @cocotb.test()
@@ -290,7 +290,7 @@ async def slt_4(dut):
     dut.shamt.value = 15   # shamt should not affect SLT
 
     # Act & Assert
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     assert dut.aluOut.value == 1, f"SLT operation failed: {dut.aluOut.value} != 1"
 
 # ================================================================
@@ -308,7 +308,7 @@ async def sll_1(dut):
     dut.shamt.value = 2   # shamt should affect SLL
 
     # Act & Assert
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     assert dut.aluOut.value == 0b101000, f"SLL operation failed: {dut.aluOut.value} != 0b101000"
 
 @cocotb.test()
@@ -322,7 +322,7 @@ async def srl_1(dut):
     dut.shamt.value = 2   # shamt should affect SRL
 
     # Act & Assert
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     assert dut.aluOut.value == 0b10, f"SRL operation failed: {dut.aluOut.value} != 0b10"
 
 @cocotb.test()
@@ -336,7 +336,7 @@ async def srl_2(dut):
     dut.shamt.value = 2   # shamt should affect SRL
 
     # Act & Assert
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     assert dut.aluOut.value == 0b00111111111111111111111111111100, f"SRL operation failed: {dut.aluOut.value} != 0b00111111111111111111111111111100"
 
 @cocotb.test()
@@ -350,7 +350,7 @@ async def sra_1(dut):
     dut.shamt.value = 2   # shamt should affect SRA
 
     # Act & Assert
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     assert dut.aluOut.value == 0b10, f"SRA operation failed: {dut.aluOut.value} != 0b10"
 
 @cocotb.test()
@@ -364,7 +364,7 @@ async def sra_2(dut):
     dut.shamt.value = 2   # shamt should affect SRA
 
     # Act & Assert
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     assert dut.aluOut.value == 0b11111111111111111111111111111100, f"SRA operation failed: {dut.aluOut.value} != 0b11111111111111111111111111111100"
 
 # ================================================================
@@ -382,7 +382,7 @@ async def nop_1(dut):
     dut.shamt.value = 2   # shamt should affect NOP
 
     # Act & Assert
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     assert dut.aluOut.value == 0, f"NOP operation failed: {dut.aluOut.value} != 0"
 
 @cocotb.test()
@@ -396,5 +396,5 @@ async def nop_2(dut):
     dut.shamt.value = 2   # shamt should affect NOP
 
     # Act & Assert
-    await cocotb.triggers.Timer(10, unit='ns')
+    await Timer(10, unit='ns')
     assert dut.aluOut.value == 0, f"NOP operation failed: {dut.aluOut.value} != 0"
