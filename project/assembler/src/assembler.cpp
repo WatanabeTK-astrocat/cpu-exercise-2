@@ -451,12 +451,26 @@ Assembler::assemble_line_second_pass(const std::string& instruction, const int a
         const auto [rs, rt, offset] = decompose_branch_operands(tokens[1], addressnow);  // Decompose operands into rs, rt, offset
         IType_Opcode opcode(22);                                                         // Opcode for 'bltu' is 22
         return std::make_tuple(wasLabel, opcode.toHexString(rs, rt, offset));
+    } else if (tokens[0] == "bgtu") {
+        // Example: bgtu $rs, $rt, offset
+        // this is a pseudo-instruction that can be translated to 'bltu $rt, $rs, offset'
+        assert(tokens.size() == 2);                                                      // Ensure the instruction has the correct number of tokens
+        const auto [rs, rt, offset] = decompose_branch_operands(tokens[1], addressnow);  // Decompose operands into rs, rt, offset
+        IType_Opcode opcode(22);                                                         // Opcode for 'bltu' is 22
+        return std::make_tuple(wasLabel, opcode.toHexString(rt, rs, offset));
     } else if (tokens[0] == "bgeu") {
         // Example: bgeu $rs, $rt, offset
         assert(tokens.size() == 2);                                                      // Ensure the instruction has the correct number of tokens
         const auto [rs, rt, offset] = decompose_branch_operands(tokens[1], addressnow);  // Decompose operands into rs, rt, offset
         IType_Opcode opcode(23);                                                         // Opcode for 'bgeu' is 23
         return std::make_tuple(wasLabel, opcode.toHexString(rs, rt, offset));
+    } else if (tokens[0] == "bleu") {
+        // Example: bleu $rs, $rt, offset
+        // this is a pseudo-instruction that can be translated to 'bgeu $rt, $rs, offset'
+        assert(tokens.size() == 2);                                                      // Ensure the instruction has the correct number of tokens
+        const auto [rs, rt, offset] = decompose_branch_operands(tokens[1], addressnow);  // Decompose operands into rs, rt, offset
+        IType_Opcode opcode(23);                                                         // Opcode for 'bgeu' is 23
+        return std::make_tuple(wasLabel, opcode.toHexString(rt, rs, offset));
     } else if (tokens[0] == "j") {
         // Example: j target
         assert(tokens.size() == 2);                            // Ensure the instruction has the correct number of tokens
