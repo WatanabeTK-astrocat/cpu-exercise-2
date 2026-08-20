@@ -23,7 +23,7 @@ int main(int argc, char* argv[]) {
 
     Assembler assembler;
     std::string res = assembler.assemble(buffer);
-    std::cout << res << std::endl;  // Print the assembled instructions
+    std::cout << res;  // Print the assembled instructions
     inputFile.close();
 
     return 0;

@@ -11,7 +11,8 @@
 
 #include "stringop.hpp"
 
-int registerToInt(const std::string& reg) {
+int registerToInt(const std::string& _reg) {
+    const std::string reg = trimString(_reg);  // Trim leading and trailing spaces from the register string
     // std::cout << "reg :" << reg << std::endl;
     if (reg == "zero") {
         return 0;  // Special case for the zero register
@@ -79,7 +80,7 @@ int registerToInt(const std::string& reg) {
         return 31;  // Special case for the return address register
     }
 
-    if (reg.empty() || reg[0] != '$' || reg[0] != 'r') {
+    if (reg.empty() || (reg[0] != '$' && reg[0] != 'r')) {
         std::cerr << "Invalid register format: " << reg << std::endl;
         std::abort();  // Terminate the program with an error
     }
