@@ -348,23 +348,41 @@ Assembler::assemble_line_second_pass(const std::string& instruction, const int a
         const auto [rt, rs, immediate] = decompose_Itype_operands(tokens[1]);  // Decompose operands into rt, rs, immediate
         IType_Opcode opcode(10);                                               // Opcode for 'slti' is 10
         return std::make_tuple(wasLabel, opcode.toHexString(rs, rt, immediate));
+    } else if (tokens[0] == "sll") {
+        // Example: sll $rd, $rt, $rs
+        assert(tokens.size() == 2);                                              // Ensure the instruction has the correct number of tokens
+        const auto [rd, rt, rs] = decompose_Rtype_nonshift_operands(tokens[1]);  // Decompose operands into rd, rt, shamt
+        RType_Nonshift_Opcode opcode(0, 0);                                      // Opcode for 'sll' is 0, funct is 0
+        return std::make_tuple(wasLabel, opcode.toHexString(rs, rt, rd));
     } else if (tokens[0] == "slli") {
         // Example: slli $rd, $rt, shamt
         assert(tokens.size() == 2);                                              // Ensure the instruction has the correct number of tokens
         const auto [rd, rt, shamt] = decompose_Rtype_shift_operands(tokens[1]);  // Decompose operands into rd, rt, shamt
-        RType_Shift_Opcode opcode(0, 0);                                         // Opcode for 'slli' is 0, funct is 0
+        RType_Shift_Opcode opcode(0, 16);                                        // Opcode for 'slli' is 0, funct is 16
         return std::make_tuple(wasLabel, opcode.toHexString(rt, rd, shamt));
+    } else if (tokens[0] == "srl") {
+        // Example: srl $rd, $rt, $rs
+        assert(tokens.size() == 2);                                              // Ensure the instruction has the correct number of tokens
+        const auto [rd, rt, rs] = decompose_Rtype_nonshift_operands(tokens[1]);  // Decompose operands into rd, rt, shamt
+        RType_Nonshift_Opcode opcode(0, 2);                                      // Opcode for 'srl' is 0, funct is 2
+        return std::make_tuple(wasLabel, opcode.toHexString(rs, rt, rd));
     } else if (tokens[0] == "srli") {
         // Example: srli $rd, $rt, shamt
         assert(tokens.size() == 2);                                              // Ensure the instruction has the correct number of tokens
         const auto [rd, rt, shamt] = decompose_Rtype_shift_operands(tokens[1]);  // Decompose operands into rd, rt, shamt
-        RType_Shift_Opcode opcode(0, 2);                                         // Opcode for 'srli' is 0, funct is 2
+        RType_Shift_Opcode opcode(0, 18);                                        // Opcode for 'srli' is 0, funct is 18
         return std::make_tuple(wasLabel, opcode.toHexString(rt, rd, shamt));
+    } else if (tokens[0] == "sra") {
+        // Example: sra $rd, $rt, $rs
+        assert(tokens.size() == 2);                                              // Ensure the instruction has the correct number of tokens
+        const auto [rd, rt, rs] = decompose_Rtype_nonshift_operands(tokens[1]);  // Decompose operands into rd, rt, shamt
+        RType_Nonshift_Opcode opcode(0, 3);                                      // Opcode for 'sra' is 0, funct is 3
+        return std::make_tuple(wasLabel, opcode.toHexString(rs, rt, rd));
     } else if (tokens[0] == "srai") {
         // Example: srai $rd, $rt, shamt
         assert(tokens.size() == 2);                                              // Ensure the instruction has the correct number of tokens
         const auto [rd, rt, shamt] = decompose_Rtype_shift_operands(tokens[1]);  // Decompose operands into rd, rt, shamt
-        RType_Shift_Opcode opcode(0, 3);                                         // Opcode for 'srai' is 0, funct is 3
+        RType_Shift_Opcode opcode(0, 19);                                        // Opcode for 'srai' is 0, funct is 19
         return std::make_tuple(wasLabel, opcode.toHexString(rt, rd, shamt));
     } else if (tokens[0] == "lw") {
         // Example: lw $rt, $rs, offset

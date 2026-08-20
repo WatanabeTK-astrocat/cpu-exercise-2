@@ -82,8 +82,8 @@ async def addition_6(dut):
     # Arrange
     dut.aluInA.value = 2147483649
     dut.aluInB.value = 2147483649
-    dut.funct.value = 32  # Assuming op=32 corresponds to addition
-    dut.shamt.value = 4   # shamt should not affect addition
+    dut.funct.value = 32    # Assuming op=32 corresponds to addition
+    dut.shamt.value = 4     # shamt should not affect addition
 
     # Act & Assert
     await Timer(10, unit='ns')
@@ -100,7 +100,7 @@ async def subtraction_1(dut):
     # Arrange
     dut.aluInA.value = 12
     dut.aluInB.value = 3
-    dut.funct.value = 34  # Assuming op=34 corresponds to subtraction
+    dut.funct.value = 34    # Assuming op=34 corresponds to subtraction
     dut.shamt.value = 0
 
     # Act & Assert
@@ -114,8 +114,8 @@ async def subtraction_2(dut):
     # Arrange
     dut.aluInA.value = 3
     dut.aluInB.value = 12
-    dut.funct.value = 34  # Assuming op=34 corresponds to subtraction
-    dut.shamt.value = 5   # shamt should not affect subtraction
+    dut.funct.value = 34    # Assuming op=34 corresponds to subtraction
+    dut.shamt.value = 5     # shamt should not affect subtraction
 
     # Act & Assert
     await Timer(10, unit='ns')
@@ -128,8 +128,8 @@ async def subtraction_3(dut):
     # Arrange
     dut.aluInA.value = 3
     dut.aluInB.value = -12
-    dut.funct.value = 34  # Assuming op=34 corresponds to subtraction
-    dut.shamt.value = 15   # shamt should not affect subtraction
+    dut.funct.value = 34    # Assuming op=34 corresponds to subtraction
+    dut.shamt.value = 15    # shamt should not affect subtraction
 
     # Act & Assert
     await Timer(10, unit='ns')
@@ -142,8 +142,8 @@ async def subtraction_4(dut):
     # Arrange
     dut.aluInA.value = 3
     dut.aluInB.value = 0
-    dut.funct.value = 34  # Assuming op=34 corresponds to subtraction
-    dut.shamt.value = 15   # shamt should not affect subtraction
+    dut.funct.value = 34    # Assuming op=34 corresponds to subtraction
+    dut.shamt.value = 15    # shamt should not affect subtraction
 
     # Act & Assert
     await Timer(10, unit='ns')
@@ -156,8 +156,8 @@ async def subtraction_5(dut):
     # Arrange
     dut.aluInA.value = 2147483648
     dut.aluInB.value = 100
-    dut.funct.value = 34  # Assuming op=34 corresponds to subtraction
-    dut.shamt.value = 15   # shamt should not affect subtraction
+    dut.funct.value = 34    # Assuming op=34 corresponds to subtraction
+    dut.shamt.value = 15    # shamt should not affect subtraction
 
     # Act & Assert
     await Timer(10, unit='ns')
@@ -170,8 +170,8 @@ async def subtraction_6(dut):
     # Arrange
     dut.aluInA.value = 0
     dut.aluInB.value = 4294967295 # 2^32 - 1
-    dut.funct.value = 34  # Assuming op=34 corresponds to subtraction
-    dut.shamt.value = 15   # shamt should not affect subtraction
+    dut.funct.value = 34    # Assuming op=34 corresponds to subtraction
+    dut.shamt.value = 15    # shamt should not affect subtraction
 
     # Act & Assert
     await Timer(10, unit='ns')
@@ -188,8 +188,8 @@ async def and_1(dut):
     # Arrange
     dut.aluInA.value = 0b1100
     dut.aluInB.value = 0b1010
-    dut.funct.value = 36  # Assuming op=36 corresponds to AND
-    dut.shamt.value = 15   # shamt should not affect AND
+    dut.funct.value = 36    # Assuming op=36 corresponds to AND
+    dut.shamt.value = 15    # shamt should not affect AND
 
     # Act & Assert
     await Timer(10, unit='ns')
@@ -202,8 +202,8 @@ async def or_1(dut):
     # Arrange
     dut.aluInA.value = 0b1100
     dut.aluInB.value = 0b1010
-    dut.funct.value = 37  # Assuming op=37 corresponds to OR
-    dut.shamt.value = 15   # shamt should not affect OR
+    dut.funct.value = 37    # Assuming op=37 corresponds to OR
+    dut.shamt.value = 15    # shamt should not affect OR
 
     # Act & Assert
     await Timer(10, unit='ns')
@@ -216,8 +216,8 @@ async def xor_1(dut):
     # Arrange
     dut.aluInA.value = 0b1100
     dut.aluInB.value = 0b1010
-    dut.funct.value = 38  # Assuming op=38 corresponds to XOR
-    dut.shamt.value = 15   # shamt should not affect XOR
+    dut.funct.value = 38    # Assuming op=38 corresponds to XOR
+    dut.shamt.value = 15    # shamt should not affect XOR
 
     # Act & Assert
     await Timer(10, unit='ns')
@@ -230,8 +230,8 @@ async def nor_1(dut):
     # Arrange
     dut.aluInA.value = 0b1100
     dut.aluInB.value = 0b1010
-    dut.funct.value = 39  # Assuming op=39 corresponds to NOR
-    dut.shamt.value = 15   # shamt should not affect NOR
+    dut.funct.value = 39    # Assuming op=39 corresponds to NOR
+    dut.shamt.value = 15    # shamt should not affect NOR
 
     # Act & Assert
     await Timer(10, unit='ns')
@@ -244,8 +244,8 @@ async def slt_1(dut):
     # Arrange
     dut.aluInA.value = 1
     dut.aluInB.value = 3
-    dut.funct.value = 42  # Assuming op=42 corresponds to SLT
-    dut.shamt.value = 15   # shamt should not affect SLT
+    dut.funct.value = 42    # Assuming op=42 corresponds to SLT
+    dut.shamt.value = 15    # shamt should not affect SLT
 
     # Act & Assert
     await Timer(10, unit='ns')
@@ -258,8 +258,8 @@ async def slt_2(dut):
     # Arrange
     dut.aluInA.value = 3
     dut.aluInB.value = 1
-    dut.funct.value = 42  # Assuming op=42 corresponds to SLT
-    dut.shamt.value = 15   # shamt should not affect SLT
+    dut.funct.value = 42    # Assuming op=42 corresponds to SLT
+    dut.shamt.value = 15    # shamt should not affect SLT
 
     # Act & Assert
     await Timer(10, unit='ns')
@@ -272,8 +272,8 @@ async def slt_3(dut):
     # Arrange
     dut.aluInA.value = -1
     dut.aluInB.value = -3
-    dut.funct.value = 42  # Assuming op=42 corresponds to SLT
-    dut.shamt.value = 15   # shamt should not affect SLT
+    dut.funct.value = 42    # Assuming op=42 corresponds to SLT
+    dut.shamt.value = 15    # shamt should not affect SLT
 
     # Act & Assert
     await Timer(10, unit='ns')
@@ -286,8 +286,8 @@ async def slt_4(dut):
     # Arrange
     dut.aluInA.value = -3
     dut.aluInB.value = 1
-    dut.funct.value = 42  # Assuming op=42 corresponds to SLT
-    dut.shamt.value = 15   # shamt should not affect SLT
+    dut.funct.value = 42    # Assuming op=42 corresponds to SLT
+    dut.shamt.value = 15    # shamt should not affect SLT
 
     # Act & Assert
     await Timer(10, unit='ns')
@@ -302,24 +302,38 @@ async def sll_1(dut):
     """Test ALU with SLL operation"""
 
     # Arrange
-    dut.aluInA.value = 0
+    dut.aluInA.value = 2
     dut.aluInB.value = 0b1010
-    dut.funct.value = 0  # Assuming op=0 corresponds to SLL
-    dut.shamt.value = 2   # shamt should affect SLL
+    dut.funct.value = 0     # Assuming op=0 corresponds to SLL
+    dut.shamt.value = 3     # shamt should not affect SLL
 
     # Act & Assert
     await Timer(10, unit='ns')
     assert dut.aluOut.value == 0b101000, f"SLL operation failed: {dut.aluOut.value} != 0b101000"
 
 @cocotb.test()
+async def slli_1(dut):
+    """Test ALU with SLLI operation"""
+
+    # Arrange
+    dut.aluInA.value = 1
+    dut.aluInB.value = 0b1010
+    dut.funct.value = 16    # Assuming op=16 corresponds to SLLI
+    dut.shamt.value = 2     # shamt should affect SLLI
+
+    # Act & Assert
+    await Timer(10, unit='ns')
+    assert dut.aluOut.value == 0b101000, f"SLLI operation failed: {dut.aluOut.value} != 0b101000"
+
+@cocotb.test()
 async def srl_1(dut):
     """Test ALU with SRL operation"""
 
     # Arrange
-    dut.aluInA.value = 0
+    dut.aluInA.value = 2
     dut.aluInB.value = 0b1010
-    dut.funct.value = 2  # Assuming op=2 corresponds to SRL
-    dut.shamt.value = 2   # shamt should affect SRL
+    dut.funct.value = 2     # Assuming op=2 corresponds to SRL
+    dut.shamt.value = 3     # shamt should not affect SRL
 
     # Act & Assert
     await Timer(10, unit='ns')
@@ -330,24 +344,52 @@ async def srl_2(dut):
     """Test ALU with SRL operation"""
 
     # Arrange
-    dut.aluInA.value = 0
+    dut.aluInA.value = 2
     dut.aluInB.value = 0b11111111111111111111111111110001
-    dut.funct.value = 2  # Assuming op=2 corresponds to SRL
-    dut.shamt.value = 2   # shamt should affect SRL
+    dut.funct.value = 2     # Assuming op=2 corresponds to SRL
+    dut.shamt.value = 3     # shamt should not affect SRL
 
     # Act & Assert
     await Timer(10, unit='ns')
     assert dut.aluOut.value == 0b00111111111111111111111111111100, f"SRL operation failed: {dut.aluOut.value} != 0b00111111111111111111111111111100"
 
 @cocotb.test()
+async def srli_1(dut):
+    """Test ALU with SRLI operation"""
+
+    # Arrange
+    dut.aluInA.value = 1
+    dut.aluInB.value = 0b1010
+    dut.funct.value = 18    # Assuming op=18 corresponds to SRLI
+    dut.shamt.value = 2     # shamt should affect SRLI
+
+    # Act & Assert
+    await Timer(10, unit='ns')
+    assert dut.aluOut.value == 0b10, f"SRLI operation failed: {dut.aluOut.value} != 0b10"
+
+@cocotb.test()
+async def srli_2(dut):
+    """Test ALU with SRLI operation"""
+
+    # Arrange
+    dut.aluInA.value = 1
+    dut.aluInB.value = 0b11111111111111111111111111110001
+    dut.funct.value = 18    # Assuming op=18 corresponds to SRLI
+    dut.shamt.value = 2     # shamt should affect SRLI
+
+    # Act & Assert
+    await Timer(10, unit='ns')
+    assert dut.aluOut.value == 0b00111111111111111111111111111100, f"SRLI operation failed: {dut.aluOut.value} != 0b00111111111111111111111111111100"
+
+@cocotb.test()
 async def sra_1(dut):
     """Test ALU with SRA operation"""
 
     # Arrange
-    dut.aluInA.value = 0
+    dut.aluInA.value = 2
     dut.aluInB.value = 0b1010
-    dut.funct.value = 3  # Assuming op=3 corresponds to SRA
-    dut.shamt.value = 2   # shamt should affect SRA
+    dut.funct.value = 3     # Assuming op=3 corresponds to SRA
+    dut.shamt.value = 3     # shamt should not affect SRA
 
     # Act & Assert
     await Timer(10, unit='ns')
@@ -358,14 +400,42 @@ async def sra_2(dut):
     """Test ALU with SRA operation"""
 
     # Arrange
-    dut.aluInA.value = 0
+    dut.aluInA.value = 2
     dut.aluInB.value = 0b11111111111111111111111111110001
-    dut.funct.value = 3  # Assuming op=3 corresponds to SRA
-    dut.shamt.value = 2   # shamt should affect SRA
+    dut.funct.value = 3     # Assuming op=3 corresponds to SRA
+    dut.shamt.value = 3     # shamt should not affect SRA
 
     # Act & Assert
     await Timer(10, unit='ns')
     assert dut.aluOut.value == 0b11111111111111111111111111111100, f"SRA operation failed: {dut.aluOut.value} != 0b11111111111111111111111111111100"
+
+@cocotb.test()
+async def srai_1(dut):
+    """Test ALU with SRAI operation"""
+
+    # Arrange
+    dut.aluInA.value = 1
+    dut.aluInB.value = 0b1010
+    dut.funct.value = 19    # Assuming op=19 corresponds to SRAI
+    dut.shamt.value = 2     # shamt should affect SRAI
+
+    # Act & Assert
+    await Timer(10, unit='ns')
+    assert dut.aluOut.value == 0b10, f"SRAI operation failed: {dut.aluOut.value} != 0b10"
+
+@cocotb.test()
+async def srai_2(dut):
+    """Test ALU with SRAI operation"""
+
+    # Arrange
+    dut.aluInA.value = 1
+    dut.aluInB.value = 0b11111111111111111111111111110001
+    dut.funct.value = 19    # Assuming op=19 corresponds to SRAI
+    dut.shamt.value = 2     # shamt should affect SRAI
+
+    # Act & Assert
+    await Timer(10, unit='ns')
+    assert dut.aluOut.value == 0b11111111111111111111111111111100, f"SRAI operation failed: {dut.aluOut.value} != 0b11111111111111111111111111111100"
 
 # ================================================================
 # NOP Tests

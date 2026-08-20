@@ -43,10 +43,16 @@ module ALU(
         SLT:
             aluOut[0] = ($signed(aluInA) < $signed(aluInB)) ? TRUE: FALSE;
         // シフト演算
+        SLL:
+            aluOut = $unsigned(aluInB) << aluInA[4:0];
         SLLI:
             aluOut = $unsigned(aluInB) << shamt;
+        SRL:
+            aluOut = $unsigned(aluInB) >> aluInA[4:0];
         SRLI:
             aluOut = $unsigned(aluInB) >> shamt;
+        SRA:
+            aluOut = $signed(aluInB) >>> aluInA[4:0];
         SRAI:
             aluOut = $signed(aluInB) >>> shamt;
         default:
