@@ -110,6 +110,7 @@ module Decode(
         BLTU,
         BGEU: begin
             opInfoOut.isBranch      = TRUE;
+            opInfoOut.imm           = insn[IMMEDIATE_POS    : IMMEDIATE_POS    + 1 - IMMEDIATE_WIDTH];
         end
         J: begin
             opInfoOut.isJumpA       = TRUE;

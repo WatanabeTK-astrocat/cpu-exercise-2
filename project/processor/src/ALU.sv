@@ -8,8 +8,8 @@ import Types::*;
 module ALU(
     output DataPath aluOut,
     
-    input DataPath aluInA,
-    input DataPath aluInB,
+    input DataPath  aluInA,
+    input DataPath  aluInB,
     input ShamtPath shamt,
     input FunctEnum funct
 );

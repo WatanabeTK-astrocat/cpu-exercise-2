@@ -13,7 +13,7 @@ module DMem(
         
     input DataAddrPath addr,
     input DataPath     dataIn,
-    input logic         wrEnable
+    input logic        wrEnable
 );
     
     DataPath mem[ 0 : DATA_MEM_SIZE-1 ];
