@@ -16,7 +16,7 @@ def run_test(runner, sources, module_name):
     )
     runner.test(
         hdl_toplevel=module_name,
-        test_module=f"test_{module_name},"
+        test_module=f"test_{module_name}"
     )
 
 if __name__ == "__main__":
@@ -47,4 +47,4 @@ if __name__ == "__main__":
     run_test(runner, sources, module_name="BranchUnit")
     run_test(runner, sources, module_name="PC")
     run_test(runner, sources, module_name="Decode")
-    #run_test(runner, sources, module_name="CPU")
+    run_test(runner, sources, module_name="CPU")

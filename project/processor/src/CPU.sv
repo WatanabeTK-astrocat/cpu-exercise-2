@@ -119,9 +119,9 @@ module CPU(
         .rst (rst),
         .rdNumA (ID_opInfo.rs),
         .rdNumB (ID_opInfo.rt),
-        .wrData (WB_rfWrData),
-        .wrNum (WB_rfWrNum),
-        .wrEnable (WB_rfWrEnable),
+        .wrData (MEM_rfWrData),      // WBではなくMEMが正しい: レジスタを省略して書き戻しを高速化
+        .wrNum (MEM_opInfo.rfWrNum),
+        .wrEnable (MEM_opInfo.rfWrEnable),
         .rdDataA (ID_rfRdDataA),
         .rdDataB (ID_rfRdDataB)
     );

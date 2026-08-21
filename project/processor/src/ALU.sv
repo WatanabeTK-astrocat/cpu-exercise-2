@@ -21,9 +21,10 @@ module ALU(
         aluOut = '0;
 
         if (funct == SUB) begin
-            aluInB_signed = -aluInB;
-        end else begin
-            aluInB_signed = aluInB;
+            aluInB_signed = -$signed(aluInB);
+        end
+        else begin
+            aluInB_signed = $signed(aluInB);
         end
 
         unique case (funct)
