@@ -1,83 +1,125 @@
-main:
-	addi	sp,sp,-16	# 0
-	sw	ra,12(sp)	#     1
-# bubblesort.c:12:     array[0] = 5;
-	li	a5,8192		# tmp137, 2
-	li	a4,5		# tmp138, 3
-	sw	a4,0(a5)	# tmp138, MEM[(volatile int *)8192B] 4
-# bubblesort.c:13:     array[1] = 9;
-	li	a4,9		# tmp141, 5
-	sw	a4,4(a5)	# tmp141, MEM[(volatile int *)8196B] 6
-# bubblesort.c:14:     array[2] = 1;
-	li	a4,1		# tmp144, 7
-	sw	a4,8(a5)	# tmp144, MEM[(volatile int *)8200B] 8
-# bubblesort.c:15:     array[3] = 4;
-	li	a4,4		# tmp147, 9
-	sw	a4,12(a5)	# tmp147, MEM[(volatile int *)8204B] 10
-# bubblesort.c:16:     array[4] = 3;
-	li	a4,3		# tmp150, 11
-	sw	a4,16(a5)	# tmp150, MEM[(volatile int *)8208B] 12
-# bubblesort.c:17:     array[5] = 2;
-	li	a4,2		# tmp153, 13
-	sw	a4,20(a5)	# tmp153, MEM[(volatile int *)8212B] 14
-# bubblesort.c:18:     array[6] = 0;
-	sw	zero,24(a5)	#, MEM[(volatile int *)8216B] 15
-# bubblesort.c:19:     array[7] = 8;
-	li	a4,8		# tmp158, 16
-	sw	a4,28(a5)	# tmp158, MEM[(volatile int *)8220B] 17
-# bubblesort.c:21:     sort(size);
-	mv	a0,a4	#, tmp158 18
-	call	sort		# 19
-.L10:
-	j	.L10		# 20
-sort:
-# bubblesort.c:44:     for (i = 0; i < size - 1; i++) {
-	li	a6,0		# i, 21
-# bubblesort.c:44:     for (i = 0; i < size - 1; i++) {
-	j	.L2		# 22
-.L3:
-# bubblesort.c:45:         for (j = 0; j < size - i - 1; j++) {
-	addi	a4,a4,1	#, j, j (a4 = 8 + 1 = 9) 23
-.L5:
-# bubblesort.c:45:         for (j = 0; j < size - i - 1; j++) {
-	sub	a5,a0,a6	# _10, size, i  (a5 = 8 - 0 = 8) 24
-# bubblesort.c:45:         for (j = 0; j < size - i - 1; j++) {
-	addi	a5,a5,-1	#, _11, _10  25
-# bubblesort.c:45:         for (j = 0; j < size - i - 1; j++) {
-	ble	a5,a4,.L7	#, _11, j,  26
-# bubblesort.c:46:             if (array[j] > array[j + 1]) {
-	slli	a3,a4,2	#, _2, j  27
-	li	a2,8192		# tmp151, 28
-	add	a3,a3,a2	# tmp151, _3, _2 29
-	lw	a1,0(a3)		# _4, *_3  30
-# bubblesort.c:46:             if (array[j] > array[j + 1]) {
-	addi	a5,a4,1	#, _5, j  31
-	slli	a5,a5,2	#, _6, _5  32
-# bubblesort.c:46:             if (array[j] > array[j + 1]) {
-	add	a5,a5,a2	# tmp151, _7, _6  33
-	lw	a2,0(a5)		# _8, *_7  34
-# bubblesort.c:46:             if (array[j] > array[j + 1]) {
-	ble	a1,a2,.L3	#, _4, _8,  35
-# bubblesort.c:47:                 int temp = array[j];
-	lw	a2,0(a3)		# temp, *_3     36
-# bubblesort.c:48:                 array[j] = array[j + 1];
-	lw	a1,0(a5)		# _9, *_7     37
-# bubblesort.c:48:                 array[j] = array[j + 1];
-	sw	a1,0(a3)	# _9, *_3     38
-# bubblesort.c:49:                 array[j + 1] = temp;
-	sw	a2,0(a5)	# temp, *_7
-	j	.L3		#
-.L7:
-# bubblesort.c:44:     for (i = 0; i < size - 1; i++) {
-	addi	a6,a6,1	#, i, i
-.L2:
-# bubblesort.c:44:     for (i = 0; i < size - 1; i++) {
-	addi	a5,a0,-1	#, _12, size
-# bubblesort.c:44:     for (i = 0; i < size - 1; i++) {
-	ble	a5,a6,.L8	#, _12, i,
-# bubblesort.c:45:         for (j = 0; j < size - i - 1; j++) {
-	li	a4,0		# j,
-	j	.L5		#
-.L8:
-# bubblesort.c:53: }
+	.attribute	4, 16
+	.attribute	5, "rv32i2p1"
+	.file	"bubblesort.c"
+	.text
+	.globl	main                            # -- Begin function main
+	.p2align	2
+	.type	main,@function
+main:                                   # @main
+# %bb.0:
+	li	a0, 0
+	lui	a2, 2
+	li	a1, 5
+	li	a3, 9
+	sw	a1, 0(a2)
+	li	a4, 1
+	sw	a3, 4(a2)
+	addi	a1, a2, 4
+	sw	a4, 4(a1)
+	li	a3, 4
+	sw	a3, 8(a1)
+	li	a3, 3
+	sw	a3, 12(a1)
+	li	a3, 2
+	sw	a3, 16(a1)
+	li	a3, 8
+	addi	a2, a2, 32
+	sw	zero, 20(a1)
+	sw	a3, 24(a1)
+	li	a3, 7
+	j	.LBB0_2
+.LBB0_1:                                #   in Loop: Header=BB0_2 Depth=1
+	addi	a0, a0, 1
+	beq	a0, a3, .LBB0_6
+.LBB0_2:                                # =>This Loop Header: Depth=1
+                                        #     Child Loop BB0_4 Depth 2
+	slli	a4, a0, 2
+	sub	a4, a2, a4
+	mv	a5, a1
+	j	.LBB0_4
+.LBB0_3:                                #   in Loop: Header=BB0_4 Depth=2
+	addi	a5, a5, 4
+	beq	a5, a4, .LBB0_1
+.LBB0_4:                                #   Parent Loop BB0_2 Depth=1
+                                        # =>  This Inner Loop Header: Depth=2
+	lw	a6, -4(a5)
+	lw	a7, 0(a5)
+	bge	a7, a6, .LBB0_3
+# %bb.5:                                #   in Loop: Header=BB0_4 Depth=2
+	lw	a6, -4(a5)
+	lw	a7, 0(a5)
+	sw	a7, -4(a5)
+	sw	a6, 0(a5)
+	j	.LBB0_3
+.LBB0_6:                                # =>This Inner Loop Header: Depth=1
+	j	.LBB0_6
+.Lfunc_end0:
+	.size	main, .Lfunc_end0-main
+                                        # -- End function
+	.globl	sort                            # -- Begin function sort
+	.p2align	2
+	.type	sort,@function
+sort:                                   # @sort
+# %bb.0:
+	li	a1, 2
+	blt	a0, a1, .LBB1_9
+# %bb.1:
+	li	a2, 0
+	addi	a1, a0, -1
+	li	a3, -2
+	lui	a4, 2
+	addi	a4, a4, 4
+	mv	a5, a1
+	j	.LBB1_4
+.LBB1_2:                                #   in Loop: Header=BB1_4 Depth=1
+	li	a6, 0
+.LBB1_3:                                #   in Loop: Header=BB1_4 Depth=1
+	addi	a2, a2, 1
+	addi	a5, a5, -1
+	beq	a2, a1, .LBB1_10
+.LBB1_4:                                # =>This Loop Header: Depth=1
+                                        #     Child Loop BB1_7 Depth 2
+	sub	a6, a2, a0
+	blt	a3, a6, .LBB1_2
+# %bb.5:                                #   in Loop: Header=BB1_4 Depth=1
+	li	a6, 0
+	mv	a7, a4
+	j	.LBB1_7
+.LBB1_6:                                #   in Loop: Header=BB1_7 Depth=2
+	addi	a6, a6, 1
+	addi	a7, a7, 4
+	beq	a5, a6, .LBB1_3
+.LBB1_7:                                #   Parent Loop BB1_4 Depth=1
+                                        # =>  This Inner Loop Header: Depth=2
+	lw	t0, -4(a7)
+	lw	t1, 0(a7)
+	bge	t1, t0, .LBB1_6
+# %bb.8:                                #   in Loop: Header=BB1_7 Depth=2
+	lw	t0, -4(a7)
+	lw	t1, 0(a7)
+	sw	t1, -4(a7)
+	sw	t0, 0(a7)
+                                        # fake_use: $x5
+	j	.LBB1_6
+.LBB1_9:
+	li	a1, 0
+                                        # implicit-def: $x16
+.LBB1_10:
+                                        # fake_use: $x16
+                                        # fake_use: $x11
+                                        # fake_use: $x10
 	ret
+.Lfunc_end1:
+	.size	sort, .Lfunc_end1-sort
+                                        # -- End function
+	.type	array,@object                   # @array
+	.section	.rodata,"a",@progbits
+	.globl	array
+	.p2align	2, 0x0
+array:
+	.word	8192
+	.size	array, 4
+
+	.ident	"Homebrew clang version 22.1.8"
+	.section	".note.GNU-stack","",@progbits
+	.addrsig

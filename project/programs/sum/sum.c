@@ -1,14 +1,14 @@
 // #include <stdio.h>  // uncomment this line if you want to use printf
-volatile short* const sum_loc = (short*)0x1000;  // Memory-mapped I/O address for the sum result
+volatile int* const sum_loc = (int*)0x1000;  // Memory-mapped I/O address for the sum result
 
-volatile short* const array = (short*)0x2000;
-// volatile short array[4096];
+volatile int* const array = (int*)0x2000;
+// volatile int array[4096];
 
-short sum_array(short size);
+int sum_array(int size);
 
 // mainを一番上に
 int main(int argc, char* argv[]) {
-    short size = 8;
+    int size = 8;
 
     array[0] = 5;
     array[1] = 9;
@@ -19,7 +19,7 @@ int main(int argc, char* argv[]) {
     array[6] = 0;
     array[7] = 8;
 
-    short sum = sum_array(size);
+    int sum = sum_array(size);
 
     // printf("Sum: %d\n", sum);  // Print the sum
     *sum_loc = sum;  // Write the sum to the memory-mapped I/O address
@@ -30,9 +30,9 @@ int main(int argc, char* argv[]) {
     return 0;
 }
 
-short sum_array(short size) {
-    short sum = 0;
-    for (short i = 0; i < size; i++) {
+int sum_array(int size) {
+    int sum = 0;
+    for (int i = 0; i < size; i++) {
         sum += array[i];
     }
     return sum;

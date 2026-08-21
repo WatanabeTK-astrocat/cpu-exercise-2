@@ -1,5 +1,30 @@
 volatile int* const array = (int*)0x2000;
 
+void swap(int i, int j);
+int median3(int a, int b, int c);
+void partition(int left, int right);
+void sort(int size);
+
+int main(int argc, char* argv[]) {
+    int size = 8;
+
+    array[0] = 5;
+    array[1] = 9;
+    array[2] = 1;
+    array[3] = 4;
+    array[4] = 3;
+    array[5] = 2;
+    array[6] = 0;
+    array[7] = 8;
+
+    sort(size);
+
+    while (1) {
+    }
+
+    return 0;
+}
+
 /**
  * @brief Swap two elements in the array
  *
@@ -85,24 +110,4 @@ void partition(int left, int right) {
  */
 void sort(int size) {
     partition(0, size - 1);
-}
-
-int main(int argc, char* argv[]) {
-    int size = 8;
-
-    array[0] = 5;
-    array[1] = 9;
-    array[2] = 1;
-    array[3] = 4;
-    array[4] = 3;
-    array[5] = 2;
-    array[6] = 0;
-    array[7] = 8;
-
-    sort(size);
-
-    while (1) {
-    }
-
-    return 0;
 }

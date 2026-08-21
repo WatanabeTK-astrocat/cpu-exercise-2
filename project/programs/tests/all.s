@@ -42,4 +42,3 @@ label1:
     jr r1               # 34
     jalr r2             # 35
 label2:
-    nop
