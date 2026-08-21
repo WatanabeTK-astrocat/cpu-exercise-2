@@ -14,7 +14,7 @@ module MainSim;
 
     parameter CYCLE_TIME = 50; // 1サイクルを 50ns に設定
 
-    integer cycle;        // サイクル
+    integer cycle;      // サイクル
     integer cycleX4;    // 4倍速サイクル
 
     logic countCycle;
