@@ -1,26 +1,26 @@
 [*]
 [*] GTKWave Analyzer v3.3.129 (w)1999-2026 BSI
-[*] Fri Aug 21 12:21:02 2026
+[*] Mon Aug 17 00:31:12 2026
 [*]
-[dumpfile] "/Users/tkkmbp/Desktop/desktop/Local_research/cpu-exercise-2/project/processor/wave.vcd"
-[dumpfile_mtime] "Fri Aug 21 08:19:14 2026"
-[dumpfile_size] 40544169
-[savefile] "/Users/tkkmbp/Desktop/desktop/Local_research/cpu-exercise-2/project/processor/wave.gtkw"
-[timestart] 1999626
-[size] 2048 1227
-[pos] 0 -1081
-*-6.000000 499844 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[dumpfile] "/Users/tkk/Desktop/desktop/Local_Research/cpu-exercise-2/project/processor/wave.vcd"
+[dumpfile_mtime] "Sun Aug 16 14:21:09 2026"
+[dumpfile_size] 4878762
+[savefile] "/Users/tkk/Desktop/desktop/Local_Research/cpu-exercise-2/project/processor/wave.gtkw"
+[timestart] 0
+[size] 2560 1055
+[pos] -1 -1
+*-6.000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] MainSim.
 [treeopen] MainSim.main.
 [treeopen] MainSim.main.cpu.
 [sst_width] 253
 [signals_width] 210
 [sst_expanded] 1
-[sst_vpaned_height] 752
+[sst_vpaned_height] 316
 @23
 MainSim.main.cpu.insnAddr[10:0]
 @c02028
-^1 /Users/tkkmbp/Desktop/desktop/Local_research/cpu-exercise-2/project/processor/enum_opcode.gtkw
+^1 /Users/tkk/Desktop/desktop/Local_Research/cpu-exercise-2/project/processor/enum_opcode.gtkw
 MainSim.main.cpu.ID_opInfo.opcode[5:0]
 @28
 (0)MainSim.main.cpu.ID_opInfo.opcode[5:0]
@@ -29,10 +29,10 @@ MainSim.main.cpu.ID_opInfo.opcode[5:0]
 (3)MainSim.main.cpu.ID_opInfo.opcode[5:0]
 (4)MainSim.main.cpu.ID_opInfo.opcode[5:0]
 (5)MainSim.main.cpu.ID_opInfo.opcode[5:0]
-@1401200
+@1401208
 -group_end
 @2028
-^2 /Users/tkkmbp/Desktop/desktop/Local_research/cpu-exercise-2/project/processor/enum_funct.gtkw
+^2 /Users/tkk/Desktop/desktop/Local_Research/cpu-exercise-2/project/processor/enum_funct.gtkw
 MainSim.main.cpu.ID_opInfo.funct[5:0]
 @22
 MainSim.main.cpu.ID_opInfo.rs[4:0]
@@ -48,13 +48,13 @@ MainSim.main.cpu.ID_opInfo.rfWrEnable
 @22
 MainSim.main.cpu.ID_opInfo.rfWrNum[4:0]
 @2028
-^1 /Users/tkkmbp/Desktop/desktop/Local_research/cpu-exercise-2/project/processor/enum_opcode.gtkw
+^1 /Users/tkk/Desktop/desktop/Local_Research/cpu-exercise-2/project/processor/enum_opcode.gtkw
 MainSim.main.cpu.EX_opInfo.opcode[5:0]
-^2 /Users/tkkmbp/Desktop/desktop/Local_research/cpu-exercise-2/project/processor/enum_funct.gtkw
+^2 /Users/tkk/Desktop/desktop/Local_Research/cpu-exercise-2/project/processor/enum_funct.gtkw
 MainSim.main.cpu.EX_opInfo.funct[5:0]
-^1 /Users/tkkmbp/Desktop/desktop/Local_research/cpu-exercise-2/project/processor/enum_opcode.gtkw
+^1 /Users/tkk/Desktop/desktop/Local_Research/cpu-exercise-2/project/processor/enum_opcode.gtkw
 MainSim.main.cpu.MEM_opInfo.opcode[5:0]
-^2 /Users/tkkmbp/Desktop/desktop/Local_research/cpu-exercise-2/project/processor/enum_funct.gtkw
+^2 /Users/tkk/Desktop/desktop/Local_Research/cpu-exercise-2/project/processor/enum_funct.gtkw
 MainSim.main.cpu.MEM_opInfo.funct[5:0]
 @28
 MainSim.main.cpu.IF_stall

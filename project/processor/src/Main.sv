@@ -27,21 +27,21 @@ module Main(
     logic clk;
     
     // IMem
-    InsnAddrPath    imemAddr;       // アドレス出力
-    InsnPath        imemDataToCPU;  // 命令コード
+    InsnAddrPath imemAddr;            // アドレス出力
+    InsnPath       imemDataToCPU;    // 命令コード
     
     // Data Memory
-    logic           dmemWrEnable;   // 書き込み有効
+    logic         dmemWrEnable;        // 書き込み有効
     
     // IOCtrl
-    logic           dataWE_Req;
+    logic         dataWE_Req;
     
     // データ
-    DataPath        dataToCPU;      // 出力
-    DataAddrPath    dataAddr;       // アドレス
-    DataPath        dataFromCPU;    // 入力
-    DataPath        dataFromDMem;   // データメモリ読み出し
-    logic           dataWE_FromCPU;
+    DataPath     dataToCPU;        // 出力
+    DataAddrPath dataAddr;            // アドレス
+    DataPath     dataFromCPU;        // 入力
+    DataPath     dataFromDMem;        // データメモリ読み出し
+    logic         dataWE_FromCPU;
 
     // Clock divider
     ClockDivider clockDivider(
@@ -78,19 +78,19 @@ module Main(
 	
     // CPU
     CPU cpu(
-        clkX4,          // パイプライン化したので，CPUは4倍速クロックで動作する
+        clk,
         rst,
-        imemAddr,       // 命令メモリへのアドレス出力
-        dataAddr,       // データメモリへのアドレス出力
+        imemAddr,        // 命令メモリへのアドレス出力
+        dataAddr,        // データメモリへのアドレス出力
         dataFromCPU,    // データメモリへの入力
-        dataWE_FromCPU, // データメモリ書き込み有効
-        imemDataToCPU,  // 命令メモリからの出力
-        dataToCPU       // データメモリからの出力
+        dataWE_FromCPU,    // データメモリ書き込み有効
+        imemDataToCPU,    // 命令メモリからの出力
+        dataToCPU        // データメモリからの出力
     );
 
     // IMem
     IMem imem( 
-        clkX4,          // メモリは4倍速
+        clkX4,             // メモリは4倍速
         rst,
         imemDataToCPU,
         imemAddr
@@ -98,7 +98,7 @@ module Main(
 
     // Data memory
     DMem dmem(
-        clkX4,          // メモリは4倍速
+        clkX4,            // メモリは4倍速
         rst,            // リセット
         dataFromDMem,
         dataAddr,
@@ -113,10 +113,7 @@ module Main(
         clkX4  = clkBase;
         
         // データメモリへの書き込みはクロックサイクル後半のみ有効
-        // dataWE_Req = !clk && dataWE_FromCPU;
-        // というのは、シングルサイクルマシンに対してのみ。
-        // パイプライン化したので、データメモリへの書き込みはクロックサイクル全体で有効にする。
-        dataWE_Req = dataWE_FromCPU;
+        dataWE_Req = !clk && dataWE_FromCPU;
 
      end
     
